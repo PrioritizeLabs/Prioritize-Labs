@@ -32,7 +32,7 @@ export default function Footer() {
   ];
 
   const company = [
-    { name: 'About Us', href: '/contact-us-us' },
+    { name: 'About Us', href: '/contact-us' },
     { name: 'Our Process', href: '#process' },
     { name: 'Case Studies', href: '/portfolio' },
     { name: 'Careers', href: '#careers' },

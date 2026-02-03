@@ -50,7 +50,7 @@ export default function Navbar() {
     { name: 'Process', href: '#process' },
     { name: 'Industries', href: '#industries' },
     { name: 'Portfolio', href: '/portfolio' },
-    { name: 'About', href: '/contact-us-us' }
+    { name: 'About', href: '/contact-us' }
   ];
 
   return (
@@ -121,7 +121,7 @@ export default function Navbar() {
             {/* CTA Button - Desktop */}
             <div className="hidden lg:block">
               <a
-                href="#contact"
+                href="/contact-us"
                 className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/50 hover:scale-105"
               >
                 <span className="relative z-10">Get Started</span>
@@ -194,7 +194,7 @@ export default function Navbar() {
 
             {/* Mobile CTA Button */}
             <a
-              href="#contact"
+              href="/contact-us"
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-violet-600 to-purple-600 text-white px-6 py-4 rounded-xl font-semibold shadow-lg shadow-violet-500/30"
             >

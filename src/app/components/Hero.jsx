@@ -104,7 +104,7 @@ export default function Hero() {
           }`}
         >
           <a
-            href="#contact"
+            href="/contact-us"
             className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-violet-500/50 hover:scale-105"
           >
             <span className="relative z-10">Get Free Consultation</span>

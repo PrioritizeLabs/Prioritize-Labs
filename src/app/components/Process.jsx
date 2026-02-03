@@ -258,7 +258,7 @@ export default function Process() {
               <p className="text-slate-400 text-sm">Let's bring your vision to life with our proven process</p>
             </div>
             <a
-              href="#contact"
+              href="/contact-us"
               className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105 whitespace-nowrap"
             >
               Start Your Project

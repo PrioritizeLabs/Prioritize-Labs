@@ -318,7 +318,7 @@ export default function Industries() {
             Don't see your industry? We adapt to any sector.
           </p>
           <a
-            href="#contact"
+            href="/contact-us"
             className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105"
           >
             <span>Discuss Your Industry Needs</span>
