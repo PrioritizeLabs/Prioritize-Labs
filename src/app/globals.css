@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --font-heading: var(--font-poppins);
+  --font-body: var(--font-geist-sans);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #020617;
+  color: #cbd5e1;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  color: #ffffff;
+}
+
+/* Purple glow utility */
+.glow {
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.35);
+}
+
+/* Custom Scrollbar - Purple & Black Theme */
+
+/* Webkit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8B5CF6 0%, #6D28D9 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7C3AED 0%, #5B21B6 100%);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8B5CF6 #000000;
+}
