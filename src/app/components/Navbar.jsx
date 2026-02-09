@@ -37,11 +37,11 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   const services = [
-    { icon: Code2, name: 'Web Development', href: '#web-dev' },
-    { icon: Share2, name: 'Social Media', href: '#social' },
-    { icon: Box, name: '3D Modeling', href: '#3d' },
-    { icon: Video, name: 'Video Production', href: '#video' },
-    { icon: Users, name: 'Creative Staffing', href: '#staffing' }
+    { icon: Code2, name: 'Web Development', href: '/services/web-dev' },
+    { icon: Share2, name: 'Social Media', href: '/services/social-media' },
+    // { icon: Box, name: '3D Modeling', href: '/services/3d-modeling' },
+    { icon: Video, name: 'Video Production', href: '/services/video-production' },
+    { icon: Users, name: 'Creative Staffing', href: '/services/creative-staffing' }
   ];
 
   const navLinks = [
