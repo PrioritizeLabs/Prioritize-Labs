@@ -28,14 +28,14 @@ const services = [
     glowColor: 'blue',
     features: ['Content Strategy', 'Analytics', 'Multi-Platform']
   },
-  {
-    title: "3D Modeling & Visualization",
-    desc: "Photorealistic 3D models, renders, animations, and immersive visual experiences.",
-    icon: Box,
-    color: 'from-purple-500 to-pink-500',
-    glowColor: 'purple',
-    features: ['Photorealistic', '3D Animation', 'VR Ready']
-  },
+  // {
+  //   title: "3D Modeling & Visualization",
+  //   desc: "Photorealistic 3D models, renders, animations, and immersive visual experiences.",
+  //   icon: Box,
+  //   color: 'from-purple-500 to-pink-500',
+  //   glowColor: 'purple',
+  //   features: ['Photorealistic', '3D Animation', 'VR Ready']
+  // },
   {
     title: "Video Production & Editing",
     desc: "Professional reels, TikToks, and corporate videos including shooting, editing, and sound design.",
@@ -151,7 +151,7 @@ export default function Services() {
         </div>
 
         {/* Services grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, i) => {
             const Icon = service.icon;
             const isHovered = hoveredIndex === i;
