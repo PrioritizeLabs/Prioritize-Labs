@@ -393,37 +393,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA SECTION */}
-      <section className="py-32 px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeUp}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm p-12 md:p-16 rounded-3xl border border-purple-500/30">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              Ready to Transform Your Business?
-            </h2>
-            <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">
-              Join 150+ businesses in Agra who trust us with their digital future. 
-              Let's build something incredible together.
-            </p>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-10 py-5 rounded-full font-semibold flex items-center justify-center gap-2 transition-all text-lg shadow-lg shadow-purple-500/50">
-                Schedule Free Consultation
-                <MessageSquare size={20} className="group-hover:scale-110 transition-transform" />
-              </button>
-            </div>
-
-            <p className="mt-6 text-gray-400 text-sm">
-              No obligation. No pushy sales. Just honest advice.
-            </p>
-          </div>
-        </motion.div>
-      </section>
 
     </div>
   )
