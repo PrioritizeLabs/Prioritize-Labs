@@ -22,6 +22,7 @@ import {
   MessageSquare,
   Rocket
 } from "lucide-react"
+import Link from "next/link"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -176,10 +177,12 @@ export default function HomePage() {
             variants={fadeUp}
             className="mt-12 flex flex-col sm:flex-row justify-center gap-4"
           >
-            <button className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70">
-              Get Free AI Consultation
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            <Link href="/services">
+              <button className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70">
+                See Our Plans & Pricing
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
             <button className="border-2 border-purple-500/50 hover:border-purple-500 px-8 py-4 rounded-full hover:bg-purple-500/10 transition-all">
               View Portfolio
             </button>
@@ -245,6 +248,22 @@ export default function HomePage() {
               )
             })}
           </motion.div>
+
+          {/* CTA after Benefits */}
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="text-center mt-16"
+          >
+            <Link href="/services">
+              <button className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-10 py-5 rounded-full font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 mx-auto">
+                Explore Our Services & Plans
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -295,6 +314,22 @@ export default function HomePage() {
               )
             })}
           </motion.div>
+
+          {/* CTA after Industries */}
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="text-center mt-16"
+          >
+            <Link href="/services">
+              <button className="group border-2 border-purple-500 hover:bg-purple-500 px-10 py-5 rounded-full font-semibold flex items-center justify-center gap-2 transition-all mx-auto hover:shadow-lg hover:shadow-purple-500/50">
+                View Pricing for Your Industry
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -342,6 +377,22 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
+
+          {/* CTA after Process */}
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="text-center mt-16"
+          >
+            <Link href="/services">
+              <button className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-10 py-5 rounded-full font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 mx-auto">
+                Choose Your Perfect Plan
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -390,10 +441,67 @@ export default function HomePage() {
               </motion.div>
             ))}
           </motion.div>
+
+          {/* CTA after Testimonials */}
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="text-center mt-16"
+          >
+            <Link href="/services">
+              <button className="group bg-white text-slate-900 hover:bg-gray-100 px-10 py-5 rounded-full font-semibold flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl mx-auto">
+                Get Started with Our Services
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
+      {/* FINAL CTA SECTION */}
+      <section className="py-32 px-4 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-600/20 rounded-full blur-3xl" />
+        </div>
+        
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="max-w-4xl mx-auto text-center relative z-10"
+        >
+          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+            Ready to Transform Your Business?
+          </h2>
+          <p className="text-gray-300 text-xl mb-12 max-w-2xl mx-auto">
+            Join 150+ businesses that are already growing with our AI-powered solutions.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link href="/services">
+              <button className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-12 py-6 rounded-full font-semibold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70">
+                View All Plans & Pricing
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+            <Link href="/services">
+              <button className="group border-2 border-white hover:bg-white hover:text-slate-900 px-12 py-6 rounded-full font-semibold text-lg transition-all">
+                Compare Packages
+              </button>
+            </Link>
+          </div>
 
+          <div className="mt-12 text-gray-400">
+            <p className="flex items-center justify-center gap-2">
+              <CheckCircle2 size={20} className="text-green-500" />
+              No hidden fees • Free consultation • 30-day guarantee
+            </p>
+          </div>
+        </motion.div>
+      </section>
 
     </div>
   )
