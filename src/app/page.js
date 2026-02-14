@@ -11,8 +11,8 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <WhyChoose />
       <Services />
+      <WhyChoose />
       <Process />
       <Results />
       <Industries />

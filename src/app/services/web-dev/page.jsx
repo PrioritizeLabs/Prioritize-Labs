@@ -157,7 +157,7 @@ export default function HomePage() {
 
           <motion.h1 
             variants={fadeUp}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight"
+            className="text-5xl md:text-6xl font-bold leading-tight"
           >
             Build Websites That
             <span className="block mt-2 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-transparent bg-clip-text">

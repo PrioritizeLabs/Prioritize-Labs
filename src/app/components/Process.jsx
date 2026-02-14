@@ -83,7 +83,7 @@ export default function Process() {
   }, [isVisible]);
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-[#0F172A] overflow-hidden">
+    <section id='process' ref={sectionRef} className="relative py-32 bg-[#0F172A] overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-600/10 rounded-full blur-3xl animate-pulse" />

@@ -8,8 +8,10 @@ import {
   Users, 
   ArrowUpRight,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Paintbrush2
 } from 'lucide-react';
+
 
 const services = [
   {
@@ -18,15 +20,17 @@ const services = [
     icon: Code2,
     color: 'from-violet-500 to-purple-500',
     glowColor: 'violet',
-    features: ['Responsive Design', 'SEO Optimized', 'Lightning Fast']
+    features: ['Responsive Design', 'SEO Optimized', 'Lightning Fast'],
+    link: '/services/web-dev'
   },
   {
-    title: "Social Media Management",
-    desc: "Data-driven content creation and management across Instagram, Facebook, LinkedIn, TikTok, and X.",
-    icon: Share2,
+    title: "Creative Content & Social Media",
+    desc: "Viral, scroll-stopping content creation and social media management that grows your brand.",
+    icon: Paintbrush2,
     color: 'from-blue-500 to-cyan-500',
     glowColor: 'blue',
-    features: ['Content Strategy', 'Analytics', 'Multi-Platform']
+    features: ['Content Strategy', 'Analytics', 'Multi-Platform'],
+    link: '/services/creative-services'
   },
   // {
   //   title: "3D Modeling & Visualization",
@@ -42,7 +46,8 @@ const services = [
     icon: Video,
     color: 'from-orange-500 to-red-500',
     glowColor: 'orange',
-    features: ['Professional Editing', 'Sound Design', 'Motion Graphics']
+    features: ['Professional Editing', 'Sound Design', 'Motion Graphics'],
+    link: '/services/video-production'
   },
   {
     title: "Creative Staffing Solutions",
@@ -50,7 +55,8 @@ const services = [
     icon: Users,
     color: 'from-green-500 to-emerald-500',
     glowColor: 'green',
-    features: ['Top Talent', 'Flexible Terms', 'Quick Onboarding']
+    features: ['Top Talent', 'Flexible Terms', 'Quick Onboarding'],
+    link: '/services/creative-staffing'
   },
 ];
 
@@ -151,7 +157,7 @@ export default function Services() {
         </div>
 
         {/* Services grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
           {services.map((service, i) => {
             const Icon = service.icon;
             const isHovered = hoveredIndex === i;
@@ -213,8 +219,14 @@ export default function Services() {
 
                     {/* Learn more link */}
                     <div className="flex items-center gap-2 text-violet-400 font-semibold group-hover:gap-4 transition-all cursor-pointer">
-                      <span>Learn More</span>
-                      <ArrowUpRight className="w-5 h-5 transform group-hover:rotate-45 transition-transform" />
+                      {service.link && (
+                        <a href={service.link} className="text-violet-400 hover:text-violet-300">
+                          <span className="flex items-center gap-2">
+                            Learn More
+                            <ArrowUpRight className="w-5 h-5 transform group-hover:rotate-45 transition-transform" />
+                          </span>
+                        </a>
+                      )}
                     </div>
                   </div>
 

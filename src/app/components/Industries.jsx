@@ -136,7 +136,7 @@ export default function Industries() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-[#0F172A] overflow-hidden">
+    <section id='industries' ref={sectionRef} className="relative py-32 bg-[#0F172A] overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-600/10 rounded-full blur-3xl animate-pulse" />
@@ -181,7 +181,7 @@ export default function Industries() {
         {/* Carousel */}
         <div className="relative">
           {/* Slider container */}
-          <div className="relative h-[500px] flex items-center justify-center">
+          <div className="relative h-[550px] flex items-center justify-center">
             {getVisibleSlides().map((industry) => {
               const Icon = industry.icon;
               const isCenter = industry.offset === 0;
@@ -193,7 +193,7 @@ export default function Industries() {
               return (
                 <div
                   key={industry.index}
-                  className="absolute transition-all duration-700 ease-out"
+                  className="absolute transition-all duration-700 ease-out "
                   style={{
                     transform: `translateX(${translateX}px) scale(${scale})`,
                     opacity: opacity,
@@ -202,12 +202,12 @@ export default function Industries() {
                   }}
                 >
                   {/* Card */}
-                  <div className="w-[360px]">
+                  <div className="w-[360px] relative">
                     {/* Glow effect */}
                     <div className={`absolute -inset-1 bg-gradient-to-r ${industry.color} rounded-3xl blur-xl ${isCenter ? 'opacity-40' : 'opacity-0'} transition-opacity duration-700`} />
                     
                     {/* Card content */}
-                    <div className={`relative h-[450px] p-8 bg-gradient-to-br from-slate-900 to-slate-900/50 backdrop-blur-sm border rounded-3xl transition-all duration-700 ${
+                    <div className={`relative  h-[500px] p-8 bg-gradient-to-br from-slate-900 to-slate-900/50 backdrop-blur-sm border rounded-3xl transition-all duration-700 ${
                       isCenter ? 'border-violet-500' : 'border-slate-800'
                     }`}>
                       {/* Icon */}

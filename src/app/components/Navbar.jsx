@@ -10,7 +10,8 @@ import {
   Box,
   Video,
   Users,
-  ArrowRight
+  ArrowRight,
+  Paintbrush2
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -38,7 +39,7 @@ export default function Navbar() {
 
   const services = [
     { icon: Code2, name: 'Web Development', href: '/services/web-dev' },
-    { icon: Share2, name: 'Social Media', href: '/services/social-media' },
+    { icon: Paintbrush2, name: 'Creative Services', href: '/services/creative-services' },
     // { icon: Box, name: '3D Modeling', href: '/services/3d-modeling' },
     { icon: Video, name: 'Video Production', href: '/services/video-production' },
     { icon: Users, name: 'Creative Staffing', href: '/services/creative-staffing' }
@@ -47,10 +48,10 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services', hasDropdown: true },
-    { name: 'Process', href: '#process' },
-    { name: 'Industries', href: '#industries' },
+    { name: 'Process', href: '/#process' },
+    { name: 'Industries', href: '/#industries' },
     { name: 'Portfolio', href: '/portfolio' },
-    { name: 'About', href: '/contact-us' }
+    { name: 'Contact Us', href: '/contact-us' }
   ];
 
   return (

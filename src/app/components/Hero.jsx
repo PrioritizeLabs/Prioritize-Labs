@@ -73,7 +73,7 @@ export default function Hero() {
 
         {/* Main heading with stagger animation */}
         <h1 
-          className={`text-3xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-center leading-tighter tracking-tighter transform transition-all duration-1000 delay-200 uppercase ${
+          className={`text-3xl md:text-6xl lg:text-7xl font-extrabold mb-8 text-center leading-tighter tracking-tighter transform transition-all duration-1000 delay-200  ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
