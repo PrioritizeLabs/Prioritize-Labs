@@ -109,7 +109,7 @@ export default function Process() {
           </div>
 
           <h2 
-            className={`text-5xl md:text-6xl font-extrabold mb-6 transform transition-all duration-1000 delay-200 ${
+            className={`text-5xl md:text-6xl font-extrabold  mb-6 transform transition-all duration-1000 delay-200 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
           >
@@ -182,7 +182,7 @@ export default function Process() {
                     </div>
 
                     {/* Title */}
-                    <h3 className={`text-xl font-bold mb-3 transition-colors duration-500 ${
+                    <h3 className={`text-xl font-bold mb-3 transition-colors duration-500 text-white! ${
                       isActive ? 'text-violet-300' : 'text-white group-hover:text-violet-300'
                     }`}>
                       {step.title}

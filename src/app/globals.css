@@ -9,8 +9,8 @@
 
 body {
   font-family: var(--font-body);
-  background-color: #020617;
-  color: #cbd5e1;
+  background-color: #fff;
+  color: #111111;
 }
 
 h1,
@@ -19,7 +19,7 @@ h3 {
   font-family: var(--font-neue-kaine);
   font-weight: 900;
   letter-spacing: 0.1;
-  color: #ffffff;
+  color: #0c0c0c;
 }
 
 /* Purple glow utility */

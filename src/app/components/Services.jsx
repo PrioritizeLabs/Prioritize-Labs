@@ -196,7 +196,7 @@ export default function Services() {
 
                   {/* Content */}
                   <div className="relative">
-                    <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-violet-300 transition-colors">
+                    <h3 className="text-2xl text-[#ffffff]! font-bold text-white mb-4 group-hover:text-violet-300 transition-colors">
                       {service.title}
                     </h3>
                     

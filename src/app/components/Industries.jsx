@@ -218,7 +218,7 @@ export default function Industries() {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-3xl font-bold text-white mb-4">
+                      <h3 className="text-3xl font-bold text-white! mb-4">
                         {industry.title}
                       </h3>
 
