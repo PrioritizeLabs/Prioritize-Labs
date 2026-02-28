@@ -86,7 +86,7 @@ export default function Navbar() {
 
                   {/* Dropdown Menu */}
                   {link.hasDropdown && activeDropdown === link.name && (
-                    <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-slate-100 rounded-2xl shadow-xl shadow-violet-100/60 overflow-hidden">
+                    <div className="absolute top-full left-0 mt-0 w-64 bg-white border border-slate-100 rounded-2xl shadow-xl shadow-violet-100/60 overflow-hidden">
                       {services.map((service) => {
                         const Icon = service.icon;
                         return (
