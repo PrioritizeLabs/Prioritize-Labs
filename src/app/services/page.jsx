@@ -1,617 +1,601 @@
 "use client";
-import { motion } from "framer-motion";
+
+import { useState, useRef, useEffect } from "react";
 import {
   Palette,
   Video,
-  Megaphone,
   Globe,
-  Rocket,
-  CheckCircle2,
+  BarChart3,
   ArrowRight,
-  Sparkles,
-  TrendingUp,
+  CheckCircle2,
+  ChevronDown,
+  MessageCircle,
+  Mail,
   Zap,
   Users,
-  Award,
-  Target,
-  Star,
+  Clock,
+  TrendingUp,
   Shield,
+  Sparkles,
 } from "lucide-react";
-import { useState } from "react";
 
-export default function DigitalMarketingServices() {
-  const [hoveredPackage, setHoveredPackage] = useState(null);
+/* ─────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────── */
+const services = [
+  {
+    id: "01",
+    slug: "creatives",
+    label: "Design & Visual Identity",
+    title: "Visuals that stop the scroll — every single time",
+    icon: Palette,
+    accent: "from-purple-500 to-violet-600",
+    lightAccent: "bg-purple-50",
+    borderAccent: "border-purple-200",
+    tagBg: "bg-purple-100 text-purple-700",
+    body: "Your audience forms an opinion about your brand in under three seconds. We make sure that opinion is unforgettable. Our design team crafts creatives built for your specific brand, your target audience, and the platform they live on.",
+    cta: "Get a Free Creative Sample",
+    items: [
+      "Logo Design & Brand Identity",
+      "Social Media Post Design (Static, Carousel, Story)",
+      "Festival & Occasion Posts",
+      "Banners & Posters",
+      "Infographics & Data Visuals",
+      "YouTube Thumbnails",
+      "Icon Design & Illustrations",
+      "Brochures, Flyers & Menu Cards",
+      "Business Cards & Stationery",
+      "Packaging Design",
+      "Digital Ad Creatives (Meta, Google)",
+      "Reel Covers & Highlight Icons",
+      "Presentation Decks",
+    ],
+  },
+  {
+    id: "02",
+    slug: "video",
+    label: "Short & Long Form Video Production",
+    title: "Videos that hook in 3 seconds — and hold till the end",
+    icon: Video,
+    accent: "from-fuchsia-500 to-purple-600",
+    lightAccent: "bg-fuchsia-50",
+    borderAccent: "border-fuchsia-200",
+    tagBg: "bg-fuchsia-100 text-fuchsia-700",
+    body: "Video is the highest-performing content format on every major platform right now. We edit content built for how people actually watch — fast-paced openers, on-screen captions, seamless cuts, colour grading that matches your brand aesthetic.",
+    cta: "See Our Video Work",
+    items: [
+      "Instagram Reels & Facebook Reels",
+      "YouTube Videos (Short & Long Form)",
+      "Promotional & Product Videos",
+      "Corporate & Brand Films",
+      "Ad Films for Meta & Google",
+      "Explainer Videos",
+      "Podcast Clips & Audiograms",
+      "Event Highlight Videos",
+      "Testimonial Video Edits",
+      "Colour Grading & Correction",
+      "Motion Captions & Subtitles",
+      "Sound Design & Background Music",
+      "Intro / Outro Animation",
+      "Voiceover Sync",
+    ],
+  },
+  {
+    id: "03",
+    slug: "web",
+    label: "React & WordPress Development",
+    title: "Websites that load fast, rank well, and convert visitors",
+    icon: Globe,
+    accent: "from-violet-500 to-purple-700",
+    lightAccent: "bg-violet-50",
+    borderAccent: "border-violet-200",
+    tagBg: "bg-violet-100 text-violet-700",
+    body: "Your website is your most powerful salesperson — it works 24/7. We build on two best-in-class platforms. WordPress for flexibility and ease. React for blazing-fast performance and cutting-edge interactions.",
+    cta: "Discuss Your Project",
+    items: [
+      "Static Business Websites (React + Next.js)",
+      "Dynamic Web Applications",
+      "High-Performance Landing Pages",
+      "API & Third-Party Integrations",
+      "AI Chatbot Integration",
+      "Custom Admin Dashboards",
+      "E-Commerce Stores (WooCommerce)",
+      "School & Institute Portals",
+      "Restaurant Websites with Menu",
+      "Portfolio & Personal Branding Sites",
+      "Custom Theme Development",
+      "On-Page SEO Setup & Speed Optimisation",
+      "Google Analytics Setup",
+    ],
+  },
+  {
+    id: "04",
+    slug: "social",
+    label: "Content Strategy & Community Growth",
+    title: "Your brand — always on, always consistent, always growing",
+    icon: BarChart3,
+    accent: "from-purple-600 to-indigo-600",
+    lightAccent: "bg-indigo-50",
+    borderAccent: "border-indigo-200",
+    tagBg: "bg-indigo-100 text-indigo-700",
+    body: "Posting once in a while and hoping it works is not a strategy. We take complete ownership of your social media — from the content calendar to the captions, from creatives to posting schedules, from community replies to monthly reports.",
+    cta: "View Our Packages",
+    items: [
+      "Monthly Content Calendar",
+      "Post Scheduling & Publishing",
+      "Graphic & Reel Creation",
+      "Caption Copywriting",
+      "Hashtag Research & Strategy",
+      "Profile Optimisation",
+      "Community Management (Comments & DMs)",
+      "Occasion & Festival Posts",
+      "Google Business Profile Management",
+      "Meta & Instagram Ads Management",
+      "Google Ads Campaigns",
+      "WhatsApp Broadcast Campaigns",
+      "Monthly Analytics & Performance Report",
+      "Competitor Tracking",
+    ],
+  },
+];
+
+const steps = [
+  {
+    num: "01",
+    title: "Discovery & Brief",
+    desc: "We start with a free consultation call. We learn about your business, your goals, your audience, and what's not working right now. No jargon — just a real conversation.",
+  },
+  {
+    num: "02",
+    title: "Strategy & Planning",
+    desc: "Based on what we learn, we build a custom plan — content calendar, design direction, website wireframe, or ad strategy. You see the roadmap before we execute a single task.",
+  },
+  {
+    num: "03",
+    title: "Creation & Delivery",
+    desc: "Our team gets to work. You get regular updates, review rounds, and revisions. Everything is delivered on time, every time.",
+  },
+  {
+    num: "04",
+    title: "Optimise & Scale",
+    desc: "We track what's working, report it clearly, and keep improving. The longer we work together, the sharper and more effective everything becomes.",
+  },
+];
+
+const whyUs = [
+  {
+    icon: Zap,
+    title: "Everything under one roof",
+    desc: "Design, video, web, and social — one team, one point of contact, one consistent brand voice across all your channels.",
+  },
+  {
+    icon: Users,
+    title: "We understand the local market",
+    desc: "We've worked with schools, restaurants, coaches, and SMBs in Agra and across UP. We know what your customers respond to.",
+  },
+  {
+    icon: Clock,
+    title: "Fast turnaround, no compromise",
+    desc: "Urgent festival post? Website update needed tonight? We move fast without cutting corners.",
+  },
+  {
+    icon: Shield,
+    title: "Transparent communication",
+    desc: "No vague reports or buzzword updates. You always know exactly what was done, what's performing, and what's coming next.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Built for growth",
+    desc: "We don't just execute tasks. We think about your long-term brand and build everything with growth as the goal.",
+  },
+  {
+    icon: Sparkles,
+    title: "Custom, never generic",
+    desc: "Every creative is built for your brand. No cookie-cutter templates. Every deliverable is made to make you stand out.",
+  },
+];
+
+/* ─────────────────────────────────────────────
+   HOOKS
+───────────────────────────────────────────── */
+function useInView(threshold = 0.15) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
+      { threshold }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+}
+
+/* ─────────────────────────────────────────────
+   SMALL COMPONENTS
+───────────────────────────────────────────── */
+function FadeIn({ children, delay = 0, className = "" }) {
+  const [ref, inView] = useInView();
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(28px)",
+        transition: `opacity 0.65s ease ${delay}s, transform 0.65s ease ${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function ServiceCard({ service, index }) {
+  const [open, setOpen] = useState(false);
+  const Icon = service.icon;
 
   return (
-    <section className="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 py-24 overflow-hidden">
-      {/* Sophisticated background effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
-        
-        {/* Gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-cyan-600/5 via-blue-600/5 to-purple-600/5 rounded-full blur-3xl" />
-        
-        {/* Sharp accent lines */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-      </div>
+    <FadeIn delay={0.05 * index}>
+      <div
+        className={`group relative rounded-3xl border ${service.borderAccent} bg-white shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden`}
+      >
+        {/* Gradient bar top */}
+        <div className={`h-1 w-full bg-gradient-to-r ${service.accent}`} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Premium Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
-        >
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-[length:200%_auto] animate-gradient text-white px-6 py-2.5 rounded-full text-sm font-semibold mb-6 shadow-lg shadow-blue-500/25 border border-blue-400/20"
-          >
-            <Sparkles className="w-4 h-4" />
-            Enterprise-Grade Digital Solutions
-          </motion.div>
-          
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-white">
-              Digital Marketing
-            </span>
-            <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">
-              Reimagined
-            </span>
-          </h2>
-          
-          <p className="mt-6 text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-light">
-            Cutting-edge digital solutions engineered to elevate your brand,
-            maximize engagement, and deliver exponential growth.
-          </p>
-
-          {/* Decorative line */}
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-blue-500/50" />
-            <Star className="w-4 h-4 text-blue-500" />
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-blue-500/50" />
-          </div>
-        </motion.div>
-
-        {/* Core Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          <ServiceCard
-            icon={<Palette className="w-6 h-6" />}
-            title="Graphic Design & Social Media"
-            gradient="from-pink-600 via-rose-600 to-pink-600"
-            delay={0.1}
-          >
-            <div className="space-y-4">
-              <FeatureItem icon={<CheckCircle2 />}>
-                20–24 premium creatives monthly
-              </FeatureItem>
-              <FeatureItem icon={<CheckCircle2 />}>
-                2–6 engagement-optimized carousels
-              </FeatureItem>
-              <FeatureItem icon={<CheckCircle2 />}>
-                Platform-specific brand alignment
-              </FeatureItem>
-              <div className="pt-6 mt-6 border-t border-slate-700/50">
-                <PriceTag price="₹7,000" period="/ month" />
-                <p className="text-xs text-slate-500 mt-2 font-light">
-                  6-month commitment plan available
-                </p>
-              </div>
+        <div className="p-8 md:p-10">
+          {/* Header row */}
+          <div className="flex flex-col sm:flex-row sm:items-start gap-5 mb-6">
+            <div
+              className={`flex-shrink-0 w-14 h-14 rounded-2xl ${service.lightAccent} flex items-center justify-center`}
+            >
+              <Icon className="w-7 h-7 text-purple-600" strokeWidth={1.6} />
             </div>
-          </ServiceCard>
-
-          <ServiceCard
-            icon={<Video className="w-6 h-6" />}
-            title="Video Production & Editing"
-            gradient="from-blue-600 via-cyan-600 to-blue-600"
-            delay={0.2}
-          >
-            <div className="space-y-4">
-              <FeatureItem icon={<Zap />}>
-                Professional editing: ₹1,000/min
-              </FeatureItem>
-              <FeatureItem icon={<Zap />}>
-                Full production: ₹1,800/min
-              </FeatureItem>
-              <FeatureItem icon={<Zap />}>
-                Premium reels: +₹500/reel
-              </FeatureItem>
-              <div className="pt-6 mt-6 border-t border-slate-700/50">
-                <span className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-400">
-                  <Shield className="w-4 h-4" />
-                  Broadcast-quality assured
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <span className="text-xs font-bold tracking-widest text-gray-400 uppercase">
+                  {service.id}
+                </span>
+                <span
+                  className={`text-xs font-semibold px-2.5 py-1 rounded-full ${service.tagBg}`}
+                >
+                  {service.label}
                 </span>
               </div>
+              <h3 className="heading text-xl md:text-2xl font-bold text-gray-900 leading-tight">
+                {service.title}
+              </h3>
             </div>
-          </ServiceCard>
+          </div>
 
-          <ServiceCard
-            icon={<Megaphone className="w-6 h-6" />}
-            title="Performance Marketing"
-            gradient="from-purple-600 via-indigo-600 to-purple-600"
-            delay={0.3}
+          {/* Body */}
+          <p className="text-gray-600 text-base leading-relaxed mb-6">
+            {service.body}
+          </p>
+
+          {/* Expandable list */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex items-center gap-2 text-sm font-semibold text-purple-600 mb-4 hover:text-purple-800 transition-colors"
           >
-            <div className="space-y-4">
-              <FeatureItem icon={<Target />}>
-                Google & Meta certified expertise
-              </FeatureItem>
-              <FeatureItem icon={<Target />}>
-                AI-powered audience targeting
-              </FeatureItem>
-              <FeatureItem icon={<Target />}>
-                Real-time optimization & analytics
-              </FeatureItem>
-              <div className="pt-6 mt-6 border-t border-slate-700/50">
-                <PriceTag price="30%" period="of ad budget" />
-                <p className="text-xs text-slate-500 mt-2 font-light">
-                  Direct platform billing
-                </p>
-              </div>
-            </div>
-          </ServiceCard>
-        </div>
-
-        {/* Web Development Solutions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-20"
-        >
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <div className="h-px w-8 bg-gradient-to-r from-transparent to-blue-500/50" />
-              <Globe className="w-8 h-8 text-blue-500" />
-              <div className="h-px w-8 bg-gradient-to-l from-transparent to-blue-500/50" />
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Web Development Excellence
-            </h3>
-            <p className="text-slate-400 max-w-2xl mx-auto font-light">
-              Modern, scalable web solutions built with cutting-edge technology
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            <WebDevCard
-              title="WordPress Development"
-              gradient="from-orange-600 via-red-600 to-orange-600"
-              delay={0.4}
-            >
-              <div className="space-y-3">
-                <PricingRow label="Professional Website" price="₹10,000" desc="Up to 10 pages, fully responsive" />
-                <PricingRow label="E-Commerce Platform" price="₹15,000 – ₹20,000" desc="Custom features & product catalog" />
-              </div>
-            </WebDevCard>
-
-            <WebDevCard
-              title="React Development"
-              gradient="from-blue-600 via-purple-600 to-blue-600"
-              delay={0.5}
-            >
-              <div className="space-y-3">
-                <PricingRow label="Static Website" price="₹15,000" desc="10 pages, optimized performance" />
-                <PricingRow label="Dynamic Application" price="₹20,000 – ₹25,000" desc="Advanced functionality & APIs" />
-              </div>
-            </WebDevCard>
-          </div>
-        </motion.div>
-
-        {/* Premium Packages Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-20"
-        >
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600 bg-[length:200%_auto] animate-gradient text-white px-6 py-2.5 rounded-full text-sm font-semibold mb-6 shadow-lg shadow-emerald-500/25 border border-emerald-400/20"
-            >
-              <Award className="w-4 h-4" />
-              Curated Package Solutions
-            </motion.div>
-            <h3 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Strategic Monthly Plans
-            </h3>
-            <p className="text-slate-400 max-w-2xl mx-auto font-light">
-              Comprehensive packages designed to scale with your ambitions
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-6">
-            <PackageCard
-              title="Starter"
-              subtitle="Foundation Package"
-              price="₹12,499"
-              sixMonth="₹62,499"
-              features={[
-                "18 premium creatives",
-                "3 carousel posts",
-                "4 reels monthly",
-                "Menu/calendar design suite",
-                "Reel production: ₹500/reel",
-              ]}
-              isPopular={false}
-              index={0}
-              hoveredPackage={hoveredPackage}
-              setHoveredPackage={setHoveredPackage}
+            <ChevronDown
+              className={`w-4 h-4 transition-transform duration-300 ${
+                open ? "rotate-180" : ""
+              }`}
             />
+            {open
+              ? "Hide services"
+              : `Show all ${service.items.length} services`}
+          </button>
 
-            <PackageCard
-              title="Growth"
-              subtitle="Accelerator Package"
-              price="₹9,999"
-              sixMonth="₹54,499"
-              features={[
-                "16 premium creatives",
-                "2 carousel posts",
-                "4 reels per month",
-                "Reel production: ₹500/reel",
-              ]}
-              isPopular={true}
-              index={1}
-              hoveredPackage={hoveredPackage}
-              setHoveredPackage={setHoveredPackage}
-            />
-
-            <PackageCard
-              title="Professional"
-              subtitle="Performance Package"
-              price="₹14,999"
-              sixMonth="₹74,999"
-              features={[
-                "21 premium creatives",
-                "4 carousel posts",
-                "5 professional reels",
-                "Google & Meta Ads",
-                "₹1,000 managed ad budget",
-              ]}
-              isPopular={false}
-              index={2}
-              hoveredPackage={hoveredPackage}
-              setHoveredPackage={setHoveredPackage}
-            />
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <PackageCard
-              title="Enterprise"
-              subtitle="Premium Package"
-              price="₹24,999"
-              sixMonth="₹99,999"
-              features={[
-                "21 premium creatives",
-                "7 professional reels",
-                "Full ads management",
-                "5 print-ready materials",
-                "WordPress website (10 pages)",
-              ]}
-              isPopular={false}
-              isPremium={true}
-              index={3}
-              hoveredPackage={hoveredPackage}
-              setHoveredPackage={setHoveredPackage}
-            />
-
-            <PackageCard
-              title="Ultimate"
-              subtitle="Elite Package"
-              price="₹29,999"
-              sixMonth="₹1,19,999"
-              features={[
-                "24 premium creatives",
-                "10 professional reels",
-                "Full ads management",
-                "7 print-ready materials",
-                "React website (10 pages)",
-              ]}
-              isPopular={false}
-              isPremium={true}
-              index={4}
-              hoveredPackage={hoveredPackage}
-              setHoveredPackage={setHoveredPackage}
-            />
-          </div>
-        </motion.div>
-
-        {/* Why Choose Us - Premium Edition */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative bg-gradient-to-br from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-12 border border-slate-700/50 overflow-hidden"
-        >
-          {/* Background accent */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.05)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-          
-          <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-10">
-              <div className="p-4 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl shadow-lg shadow-blue-500/25">
-                <Rocket className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <h3 className="text-3xl md:text-4xl font-bold text-white">
-                  The Competitive Edge
-                </h3>
-                <p className="text-slate-400 mt-1 font-light">Why industry leaders choose us</p>
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  icon: <Users className="w-5 h-5" />,
-                  text: "End-to-end integrated services under one roof",
-                  gradient: "from-blue-600 to-cyan-600",
-                },
-                {
-                  icon: <Target className="w-5 h-5" />,
-                  text: "Transparent pricing with scalable solutions",
-                  gradient: "from-purple-600 to-pink-600",
-                },
-                {
-                  icon: <TrendingUp className="w-5 h-5" />,
-                  text: "Data-driven performance marketing strategies",
-                  gradient: "from-green-600 to-emerald-600",
-                },
-                {
-                  icon: <Zap className="w-5 h-5" />,
-                  text: "Lightning-fast, SEO-optimized web solutions",
-                  gradient: "from-orange-600 to-red-600",
-                },
-                {
-                  icon: <Award className="w-5 h-5" />,
-                  text: "24/7 dedicated support & consultation",
-                  gradient: "from-indigo-600 to-purple-600",
-                },
-                {
-                  icon: <Sparkles className="w-5 h-5" />,
-                  text: "Proven track record with Fortune 500 clients",
-                  gradient: "from-cyan-600 to-blue-600",
-                },
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="group relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="relative flex items-start gap-4 p-4 bg-slate-800/30 rounded-xl border border-slate-700/50 group-hover:border-slate-600/50 transition-all duration-300">
-                    <div className={`p-2.5 bg-gradient-to-br ${item.gradient} rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      <div className="text-white">{item.icon}</div>
-                    </div>
-                    <p className="text-slate-300 leading-relaxed text-sm font-light pt-1">{item.text}</p>
-                  </div>
-                </motion.div>
+          <div
+            style={{
+              maxHeight: open ? "700px" : "0px",
+              overflow: "hidden",
+              transition: "max-height 0.45s ease",
+            }}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 pb-6">
+              {service.items.map((item) => (
+                <div key={item} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm text-gray-700">{item}</span>
+                </div>
               ))}
             </div>
           </div>
-        </motion.div>
-      </div>
 
-      <style jsx global>{`
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        .animate-gradient {
-          animation: gradient 3s ease infinite;
-        }
-      `}</style>
+          {/* CTA */}
+          <a
+            href="#contact"
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r ${service.accent} text-white text-sm font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200`}
+          >
+            {service.cta}
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </FadeIn>
+  );
+}
+
+function StepCard({ step, index }) {
+  return (
+    <FadeIn delay={0.1 * index}>
+      <div className="relative flex gap-5">
+        {index < steps.length - 1 && (
+          <div className="absolute left-6 top-14 w-px h-full bg-purple-100 z-0" />
+        )}
+        <div className="relative z-10 flex-shrink-0 w-12 h-12 rounded-2xl bg-purple-500 text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-purple-200">
+          {step.num}
+        </div>
+        <div className="pt-1 pb-10">
+          <h4 className="heading font-bold text-gray-900 text-lg mb-1.5">
+            {step.title}
+          </h4>
+          <p className="text-gray-500 text-sm leading-relaxed">{step.desc}</p>
+        </div>
+      </div>
+    </FadeIn>
+  );
+}
+
+function WhyCard({ item, index }) {
+  const Icon = item.icon;
+  return (
+    <FadeIn delay={0.07 * index}>
+      <div className="group p-6 rounded-2xl bg-white border border-gray-100 hover:border-purple-200 hover:shadow-lg transition-all duration-300 h-full">
+        <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center mb-4 group-hover:bg-purple-100 transition-colors">
+          <Icon className="w-5 h-5 text-purple-600" strokeWidth={1.7} />
+        </div>
+        <h4 className="heading font-bold text-gray-900 mb-2">{item.title}</h4>
+        <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+      </div>
+    </FadeIn>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   HERO SECTION
+───────────────────────────────────────────── */
+function Hero() {
+  return (
+    <section className="relative overflow-hidden bg-white pt-20 pb-16 md:pt-28 md:pb-24">
+      {/* Decorative blobs */}
+      <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-purple-100 opacity-40 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] rounded-full bg-violet-100 opacity-30 blur-3xl pointer-events-none" />
+
+      {/* Dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #d8b4fe 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          opacity: 0.35,
+        }}
+      />
+
+      <div className="relative max-w-5xl mx-auto px-5 sm:px-8 text-center">
+        <FadeIn>
+          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-purple-500 mb-5 px-4 py-2 rounded-full bg-purple-50 border border-purple-200">
+            <Sparkles className="w-3.5 h-3.5" />
+            Our Services
+          </span>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <h1 className="heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-950 leading-tight tracking-tight mb-6">
+            We Build Brands That{" "}
+            <span className="relative inline-block text-purple-500">
+              Move People
+              <svg
+                className="absolute -bottom-1 left-0 w-full"
+                viewBox="0 0 300 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 9 C80 2, 220 2, 298 9"
+                  stroke="#a855f7"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+            </span>{" "}
+            Online
+          </h1>
+        </FadeIn>
+
+        <FadeIn delay={0.18}>
+          <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
+            PrioritizeLabs is your end-to-end digital partner — from the first
+            creative your audience sees, to the website they land on, to the
+            content that keeps them coming back.{" "}
+            <span className="text-purple-600 font-semibold">
+              Based in Agra. Built for India.
+            </span>
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={0.24}>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="https://wa.me/"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-200 hover:bg-purple-600 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <MessageCircle className="w-4 h-4" />
+              WhatsApp Us Now
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-white text-purple-600 font-bold text-sm border border-purple-200 hover:border-purple-400 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <Mail className="w-4 h-4" />
+              Send an Enquiry
+            </a>
+          </div>
+        </FadeIn>
+
+        {/* Scroll indicator */}
+        <FadeIn delay={0.35}>
+          <div className="mt-14 flex flex-col items-center gap-1.5 text-gray-400">
+            <span className="text-xs tracking-widest uppercase">
+              Scroll to explore
+            </span>
+            <div className="w-px h-10 bg-gradient-to-b from-gray-300 to-transparent" />
+          </div>
+        </FadeIn>
+      </div>
     </section>
   );
 }
 
-/* Premium Reusable Components */
-
-function ServiceCard({ icon, title, gradient, children, delay }) {
+/* ─────────────────────────────────────────────
+   MAIN PAGE
+───────────────────────────────────────────── */
+export default function ServicesPage() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-      className="group relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-700/50 hover:border-slate-600/50"
-    >
-      {/* Top gradient accent */}
-      <div className={`h-1 bg-gradient-to-r ${gradient} bg-[length:200%_auto] animate-gradient`} />
-      
-      {/* Hover glow effect */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-      
-      <div className="relative p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className={`p-3 bg-gradient-to-br ${gradient} rounded-xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-            <div className="text-white">{icon}</div>
-          </div>
-          <h3 className="text-xl font-bold text-white">{title}</h3>
-        </div>
-        <div className="text-slate-300">{children}</div>
-      </div>
-    </motion.div>
-  );
-}
+    <main className="bg-gray-50 min-h-screen">
+      {/* ── Hero ── */}
+      <Hero />
 
-function WebDevCard({ title, gradient, children, delay }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
-      className="group relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-700/50 hover:border-slate-600/50"
-    >
-      <div className={`p-6 bg-gradient-to-br ${gradient} bg-[length:200%_auto] animate-gradient relative overflow-hidden`}>
-        <div className="absolute inset-0 bg-black/20" />
-        <h3 className="relative text-xl font-bold text-white flex items-center gap-3">
-          <Globe className="w-6 h-6" />
-          {title}
-        </h3>
-      </div>
-      <div className="p-6">{children}</div>
-    </motion.div>
-  );
-}
-
-function PackageCard({ title, subtitle, price, sixMonth, features, isPopular, isPremium, index, hoveredPackage, setHoveredPackage }) {
-  const isHovered = hoveredPackage === index;
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -12, scale: 1.02, transition: { duration: 0.3 } }}
-      onHoverStart={() => setHoveredPackage(index)}
-      onHoverEnd={() => setHoveredPackage(null)}
-      className={`relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 ${
-        isPopular 
-          ? "border-blue-500/50 shadow-blue-500/20" 
-          : isPremium 
-          ? "border-purple-500/50 shadow-purple-500/20" 
-          : "border-slate-700/50"
-      }`}
-    >
-      {/* Badge */}
-      {isPopular && (
-        <div className="absolute top-0 right-0 z-10">
-          <div className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-5 py-2 rounded-bl-2xl text-xs font-bold tracking-wider flex items-center gap-1.5 shadow-lg">
-            <Star className="w-3.5 h-3.5 fill-current" />
-            BEST VALUE
+      {/* ── Services Grid ── */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24">
+        <FadeIn>
+          <div className="mb-12 text-center">
+            <h2 className="heading text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
+              What We Do
+            </h2>
+            <p className="text-gray-500 max-w-xl mx-auto">
+              Four core disciplines. One unified team. Infinite possibilities
+              for your brand.
+            </p>
           </div>
-        </div>
-      )}
-      {isPremium && (
-        <div className="absolute top-0 right-0 z-10">
-          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2 rounded-bl-2xl text-xs font-bold tracking-wider flex items-center gap-1.5 shadow-lg">
-            <Sparkles className="w-3.5 h-3.5" />
-            PREMIUM
-          </div>
-        </div>
-      )}
-      
-      {/* Hover glow */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${
-        isPopular ? "from-blue-600/5 to-cyan-600/5" : isPremium ? "from-purple-600/5 to-pink-600/5" : "from-slate-600/5 to-slate-500/5"
-      } opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-      
-      {/* Header */}
-      <div className={`relative p-8 ${
-        isPopular 
-          ? "bg-gradient-to-br from-blue-950/50 to-cyan-950/50" 
-          : isPremium 
-          ? "bg-gradient-to-br from-purple-950/50 to-pink-950/50" 
-          : "bg-slate-900/50"
-      }`}>
-        <p className="text-sm font-semibold text-slate-400 mb-1 tracking-wide uppercase">{subtitle}</p>
-        <h4 className="text-3xl font-bold text-white mb-4">{title}</h4>
-        <div className="flex items-baseline gap-2 mb-4">
-          <span className={`text-5xl font-bold ${
-            isPopular ? "bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400" 
-            : isPremium ? "bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400" 
-            : "text-white"
-          }`}>
-            {price}
-          </span>
-          <span className="text-slate-400 font-light">/ month</span>
-        </div>
-        <div className="flex items-center gap-2 p-3 bg-green-950/30 rounded-lg border border-green-500/20">
-          <TrendingUp className="w-4 h-4 text-green-400" />
-          <p className="text-sm font-semibold text-green-400">
-            6-month plan: {sixMonth}
-          </p>
-        </div>
-      </div>
-
-      {/* Features */}
-      <div className="relative p-8">
-        <ul className="space-y-4 mb-8">
-          {features.map((feature, idx) => (
-            <motion.li
-              key={idx}
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: idx * 0.05 }}
-              className="flex items-start gap-3"
-            >
-              <CheckCircle2 className={`w-5 h-5 mt-0.5 flex-shrink-0 ${
-                isPopular ? "text-blue-400" : isPremium ? "text-purple-400" : "text-green-400"
-              }`} />
-              <span className="text-slate-300 text-sm leading-relaxed font-light">{feature}</span>
-            </motion.li>
+        </FadeIn>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {services.map((s, i) => (
+            <ServiceCard key={s.id} service={s} index={i} />
           ))}
-        </ul>
+        </div>
+      </section>
 
-        {/* CTA Button */}
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className={`w-full py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 ${
-            isPopular
-              ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40"
-              : isPremium
-              ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40"
-              : "bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white shadow-lg shadow-slate-700/30"
-          }`}
-        >
-          Get Started
-          <ArrowRight className={`w-5 h-5 transition-transform duration-300 ${isHovered ? "translate-x-1" : ""}`} />
-        </motion.button>
-      </div>
-    </motion.div>
-  );
-}
+      {/* ── Process ── */}
+      <section className="bg-white border-y border-gray-100 py-16 md:py-24">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <FadeIn>
+              <div className="lg:sticky lg:top-28">
+                <span className="text-xs font-bold tracking-widest uppercase text-purple-500 block mb-4">
+                  Our Process
+                </span>
+                <h2 className="heading text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">
+                  Your success, prioritized from day one
+                </h2>
+                <p className="text-gray-500 leading-relaxed">
+                  We don't just take briefs and disappear. Every engagement is a
+                  genuine partnership built on clarity, communication, and
+                  measurable results.
+                </p>
+                <div className="mt-8 p-5 rounded-2xl bg-purple-50 border border-purple-100">
+                  <p className="text-sm text-purple-700 font-medium leading-relaxed">
+                    💬&nbsp; Every project starts with a{" "}
+                    <strong>free consultation call</strong>. No commitment, no
+                    pressure. Just a real conversation about your goals.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+            <div className="flex flex-col">
+              {steps.map((step, i) => (
+                <StepCard key={step.num} step={step} index={i} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-function FeatureItem({ icon, children }) {
-  return (
-    <div className="flex items-start gap-3">
-      <div className="text-green-400 mt-0.5 flex-shrink-0">{icon}</div>
-      <span className="text-sm text-slate-300 leading-relaxed font-light">{children}</span>
-    </div>
-  );
-}
+      {/* ── Why Us ── */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 md:py-24">
+        <FadeIn>
+          <div className="mb-12 text-center">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-500 block mb-4">
+              Why PrioritizeLabs
+            </span>
+            <h2 className="heading text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
+              Why Businesses Choose Us
+            </h2>
+            <p className="text-gray-500 max-w-xl mx-auto">
+              Beyond deliverables — we're a growth partner that genuinely cares
+              about your brand's success.
+            </p>
+          </div>
+        </FadeIn>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {whyUs.map((item, i) => (
+            <WhyCard key={item.title} item={item} index={i} />
+          ))}
+        </div>
+      </section>
 
-function PriceTag({ price, period }) {
-  return (
-    <div className="flex items-baseline gap-2">
-      <span className="text-3xl font-bold text-white">{price}</span>
-      <span className="text-sm text-slate-400 font-light">{period}</span>
-    </div>
-  );
-}
+      {/* ── Bottom CTA ── */}
+      <section
+        id="contact"
+        className="relative overflow-hidden bg-gradient-to-br from-purple-600 to-violet-700 py-20 md:py-28"
+      >
+        {/* Decorative circles */}
+        <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white opacity-5 translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-56 h-56 rounded-full bg-white opacity-5 -translate-x-1/3 translate-y-1/3 pointer-events-none" />
+        {/* Dot grid overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
 
-function PricingRow({ label, price, desc }) {
-  return (
-    <div className="flex items-start justify-between gap-4 p-4 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-all duration-200 border border-slate-700/50 hover:border-slate-600/50 group">
-      <div>
-        <p className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-200">{label}</p>
-        <p className="text-xs text-slate-400 mt-1 font-light">{desc}</p>
-      </div>
-      <span className="font-bold text-blue-400 whitespace-nowrap text-lg">{price}</span>
-    </div>
+        <div className="relative max-w-3xl mx-auto px-5 sm:px-8 text-center">
+          <FadeIn>
+            <h2 className="heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
+              Ready to grow your brand online?
+            </h2>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p className="text-purple-200 text-lg mb-10 leading-relaxed">
+              Get a free consultation — no commitment, no pressure. Tell us what
+              you need and we'll tell you exactly how we can help.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.18}>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-7">
+              <a
+                href="https://wa.me/"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white text-purple-700 font-bold text-sm shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+              >
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp Us Now
+              </a>
+              <a
+                href="mailto:hello@prioritizelabs.com"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/10 backdrop-blur text-white font-bold text-sm border border-white/20 hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-200"
+              >
+                <Mail className="w-4 h-4" />
+                Send an Enquiry
+              </a>
+            </div>
+            <p className="text-purple-300 text-xs">
+              Response within 24 hours &nbsp;·&nbsp; Based in Agra, serving
+              clients across India
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+    </main>
   );
 }
