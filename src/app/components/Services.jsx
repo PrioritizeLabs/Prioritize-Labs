@@ -1,272 +1,257 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
-import { 
-  Code2, 
-  Share2, 
-  Box, 
-  Video, 
-  Users, 
+import {
+  Code2,
+  Paintbrush2,
+  Video,
   ArrowUpRight,
   Sparkles,
   ChevronRight,
-  Paintbrush2
 } from 'lucide-react';
-
 
 const services = [
   {
     title: "Web Development Excellence",
     desc: "Custom websites and e-commerce platforms that are fast, responsive, and SEO-optimized.",
     icon: Code2,
-    color: 'from-violet-500 to-purple-500',
-    glowColor: 'violet',
+    accentClass: 'violet',
     features: ['Responsive Design', 'SEO Optimized', 'Lightning Fast'],
-    link: '/services/web-dev'
+    link: '/services/web-dev',
   },
   {
     title: "Creative Content & Social Media",
     desc: "Viral, scroll-stopping content creation and social media management that grows your brand.",
     icon: Paintbrush2,
-    color: 'from-blue-500 to-cyan-500',
-    glowColor: 'blue',
+    accentClass: 'blue',
     features: ['Content Strategy', 'Analytics', 'Multi-Platform'],
-    link: '/services/creative-services'
+    link: '/services/creative-services',
   },
-  // {
-  //   title: "3D Modeling & Visualization",
-  //   desc: "Photorealistic 3D models, renders, animations, and immersive visual experiences.",
-  //   icon: Box,
-  //   color: 'from-purple-500 to-pink-500',
-  //   glowColor: 'purple',
-  //   features: ['Photorealistic', '3D Animation', 'VR Ready']
-  // },
   {
     title: "Video Production & Editing",
     desc: "Professional reels, TikToks, and corporate videos including shooting, editing, and sound design.",
     icon: Video,
-    color: 'from-orange-500 to-red-500',
-    glowColor: 'orange',
+    accentClass: 'orange',
     features: ['Professional Editing', 'Sound Design', 'Motion Graphics'],
-    link: '/services/video-production'
-  },
-  {
-    title: "Creative Staffing Solutions",
-    desc: "Flexible staffing solutions with top-tier creative and technical talent.",
-    icon: Users,
-    color: 'from-green-500 to-emerald-500',
-    glowColor: 'green',
-    features: ['Top Talent', 'Flexible Terms', 'Quick Onboarding'],
-    link: '/services/creative-staffing'
+    link: '/services/video-production',
   },
 ];
 
+const accentConfig = {
+  violet: {
+    stripe: 'from-violet-600 to-violet-300',
+    iconBg: 'bg-violet-100',
+    iconColor: 'text-violet-700',
+    pillBg: 'bg-violet-100 text-violet-700',
+    link: 'text-violet-700',
+    hoverBorder: 'hover:border-violet-300',
+    hoverNum: 'group-hover:text-violet-200',
+    hoverGlow: 'group-hover:shadow-violet-100',
+  },
+  blue: {
+    stripe: 'from-blue-600 to-blue-300',
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-700',
+    pillBg: 'bg-blue-100 text-blue-700',
+    link: 'text-blue-700',
+    hoverBorder: 'hover:border-blue-300',
+    hoverNum: 'group-hover:text-blue-200',
+    hoverGlow: 'group-hover:shadow-blue-100',
+  },
+  orange: {
+    stripe: 'from-orange-600 to-orange-300',
+    iconBg: 'bg-orange-100',
+    iconColor: 'text-orange-700',
+    pillBg: 'bg-orange-100 text-orange-700',
+    link: 'text-orange-700',
+    hoverBorder: 'hover:border-orange-300',
+    hoverNum: 'group-hover:text-orange-200',
+    hoverGlow: 'group-hover:shadow-orange-100',
+  },
+};
+
 export default function Services() {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
       { threshold: 0.1 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => { if (sectionRef.current) observer.unobserve(sectionRef.current); };
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-black overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0">
-        {/* Gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-        
-        {/* Animated lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0" />
-              <stop offset="50%" stopColor="#8B5CF6" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          {[...Array(5)].map((_, i) => (
-            <line
-              key={i}
-              x1="0"
-              y1={`${20 * i}%`}
-              x2="100%"
-              y2={`${20 * i + 10}%`}
-              stroke="url(#line-gradient)"
-              strokeWidth="1"
-              className="animate-pulse"
-              style={{ animationDelay: `${i * 0.5}s` }}
-            />
-          ))}
-        </svg>
-      </div>
+    <section
+      ref={sectionRef}
+      className="relative py-28 overflow-hidden"
+      style={{ backgroundColor: '#F7F5F0' }}
+    >
+      {/* Dot grid */}
+      <div
+        className="absolute inset-0 opacity-50 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #c4bfb0 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
 
-      {/* Dot pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      {/* Blobs */}
+      <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'rgba(139,92,246,0.07)', filter: 'blur(80px)' }} />
+      <div className="absolute -bottom-16 -right-16 w-72 h-72 rounded-full pointer-events-none" style={{ background: 'rgba(59,130,246,0.06)', filter: 'blur(80px)' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full pointer-events-none" style={{ background: 'rgba(251,146,60,0.05)', filter: 'blur(80px)' }} />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-6xl mx-auto px-6">
+
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="mb-16">
+
           {/* Badge */}
-          <div 
-            className={`inline-flex items-center gap-2 px-4 py-2 mb-6 bg-violet-500/10 border border-violet-500/20 rounded-full backdrop-blur-sm transform transition-all duration-1000 ${
-              isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'
+          <div
+            className={`inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white border rounded-full transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
             }`}
+            style={{ borderColor: '#E2DDD6' }}
           >
-            <Sparkles className="w-4 h-4 text-violet-400" />
-            <span className="text-sm text-violet-300 font-medium">What We Offer</span>
+            <span className="w-2 h-2 rounded-full bg-violet-400 inline-block" />
+            <span className="text-xs font-medium tracking-widest uppercase" style={{ color: '#7C6F5E' }}>
+              What We Offer
+            </span>
           </div>
 
-          {/* Main heading */}
-          <h2 
-            className={`text-5xl md:text-6xl font-extrabold mb-6 transform transition-all duration-1000 delay-200 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          {/* Heading */}
+          <h2
+            className={`font-serif text-6xl md:text-7xl leading-[1.05] tracking-tight mb-5 transition-all duration-700 delay-150 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
+            style={{ color: '#1C1712',  }}
           >
-            <span className="block text-white mb-2">Our Core</span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400">
+            Our Core{' '}
+            <em className="italic not-italic" style={{ color: '#7C3AED', fontStyle: '' }}>
               Services
-            </span>
+            </em>
           </h2>
 
-          <p 
-            className={`max-w-2xl mx-auto text-lg text-slate-400 transform transition-all duration-1000 delay-400 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          {/* Subtext */}
+          <p
+            className={`text-lg max-w-xl leading-relaxed transition-all duration-700 delay-300 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
+            style={{ color: '#7C6F5E', fontWeight: 300 }}
           >
-            Comprehensive solutions designed to transform your digital presence and drive measurable results
+            Comprehensive solutions designed to transform your digital presence and drive measurable results.
           </p>
         </div>
 
-        {/* Services grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+        {/* Cards Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {services.map((service, i) => {
             const Icon = service.icon;
-            const isHovered = hoveredIndex === i;
-            
+            const accent = accentConfig[service.accentClass];
+
             return (
               <div
                 key={i}
-                className={`group relative transform transition-all duration-700 ${
-                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                className={`group relative bg-white rounded-2xl border overflow-hidden transition-all duration-500 ${accent.hoverBorder} hover:-translate-y-1 hover:shadow-xl ${accent.hoverGlow} ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
-                style={{ transitionDelay: `${600 + i * 100}ms` }}
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                style={{
+                  borderColor: '#E8E3DB',
+                  transitionDelay: `${400 + i * 100}ms`,
+                }}
               >
-                {/* Glow effect */}
-                <div 
-                  className={`absolute -inset-1 bg-gradient-to-r ${service.color} rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-all duration-500`}
+                {/* Animated top stripe */}
+                <div
+                  className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${accent.stripe} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-400`}
                 />
 
-                {/* Card */}
-                <div className="relative h-full p-8 bg-gradient-to-br from-slate-900 to-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl group-hover:border-violet-500/50 transition-all duration-500 overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div 
-                    className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                  />
-
-                  {/* Corner accent */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-violet-500/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="p-8">
+                  {/* Number badge */}
+                  <span
+                    className={`absolute top-6 right-6 font-serif text-3xl leading-none transition-colors duration-300 ${accent.hoverNum}`}
+                    style={{ color: '#E8E3DB', fontFamily: '"DM Serif Display", Georgia, serif' }}
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
 
                   {/* Icon */}
-                  <div className="relative mb-6">
-                    <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${service.color} transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-lg`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
+                  <div
+                    className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-6 ${accent.iconBg} ${accent.iconColor} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}
+                  >
+                    <Icon className="w-5 h-5" strokeWidth={1.8} />
                   </div>
 
-                  {/* Content */}
-                  <div className="relative">
-                    <h3 className="text-2xl text-[#ffffff]! font-bold text-white mb-4 group-hover:text-violet-300 transition-colors">
-                      {service.title}
-                    </h3>
-                    
-                    <p className="text-slate-400 leading-relaxed mb-6 group-hover:text-slate-300 transition-colors">
-                      {service.desc}
-                    </p>
+                  {/* Title */}
+                  <h3
+                    className="text-lg font-semibold mb-3 leading-snug transition-colors duration-200"
+                    style={{ color: '#1C1712' }}
+                  >
+                    {service.title}
+                  </h3>
 
-                    {/* Features list */}
-                    <div className="space-y-2 mb-6">
-                      {service.features.map((feature, idx) => (
-                        <div 
-                          key={idx}
-                          className="flex items-center gap-2 text-sm text-slate-500 group-hover:text-violet-400 transition-colors"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
-                    </div>
+                  {/* Description */}
+                  <p
+                    className="text-sm leading-relaxed mb-5"
+                    style={{ color: '#7C6F5E', fontWeight: 300 }}
+                  >
+                    {service.desc}
+                  </p>
 
-                    {/* Learn more link */}
-                    <div className="flex items-center gap-2 text-violet-400 font-semibold group-hover:gap-4 transition-all cursor-pointer">
-                      {service.link && (
-                        <a href={service.link} className="text-violet-400 hover:text-violet-300">
-                          <span className="flex items-center gap-2">
-                            Learn More
-                            <ArrowUpRight className="w-5 h-5 transform group-hover:rotate-45 transition-transform" />
-                          </span>
-                        </a>
-                      )}
-                    </div>
+                  {/* Feature pills */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {service.features.map((f, idx) => (
+                      <span
+                        key={idx}
+                        className={`text-xs font-medium px-3 py-1 rounded-full ${accent.pillBg}`}
+                        style={{ letterSpacing: '0.02em' }}
+                      >
+                        {f}
+                      </span>
+                    ))}
                   </div>
 
-                  {/* Bottom gradient line */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${service.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
-
-                  {/* Number badge */}
-                  <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-slate-800/50 backdrop-blur-sm border border-slate-700 flex items-center justify-center text-violet-400 font-bold text-lg opacity-50 group-hover:opacity-100 transition-opacity">
-                    {(i + 1).toString().padStart(2, '0')}
-                  </div>
+                  {/* Link */}
+                  {service.link && (
+                    <a
+                      href={service.link}
+                      className={`inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-200 hover:gap-3 ${accent.link}`}
+                    >
+                      Learn more
+                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:rotate-45" />
+                    </a>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
 
+        {/* Divider */}
+        <hr style={{ borderColor: '#E8E3DB', borderTopWidth: '1px', marginBottom: '36px' }} />
+
         {/* Bottom CTA */}
-        <div 
-          className={`mt-20 text-center transform transition-all duration-1000 delay-1200 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+        <div
+          className={`flex items-center gap-5 flex-wrap transition-all duration-700 delay-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <p className="text-slate-400 mb-6">
+          <p className="text-sm" style={{ color: '#9C8E7E' }}>
             Can't find what you're looking for?
           </p>
           <a
             href="/contact-us"
-            className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5"
+            style={{ background: '#1C1712', color: '#F7F5F0' }}
           >
-            <span>Let's Discuss Your Project</span>
-            <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform" />
+            Let's Discuss Your Project
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.6; }
-        }
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
       `}</style>
     </section>
   );

@@ -36,7 +36,7 @@ export default function Navbar() {
     { icon: Code2, name: 'Web Development', href: '/services/web-dev' },
     { icon: Paintbrush2, name: 'Creative Services', href: '/services/creative-services' },
     { icon: Video, name: 'Video Production', href: '/services/video-production' },
-    { icon: Users, name: 'Creative Staffing', href: '/services/creative-staffing' }
+    // { icon: Users, name: 'Creative Staffing', href: '/services/creative-staffing' }
   ];
 
   const navLinks = [
