@@ -562,7 +562,7 @@ export default function ServicesPage() {
 
         <div className="relative max-w-3xl mx-auto px-5 sm:px-8 text-center">
           <FadeIn>
-            <h2 className="heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
+            <h2 className="heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white! mb-4 leading-tight">
               Ready to grow your brand online?
             </h2>
           </FadeIn>
