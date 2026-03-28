@@ -7,6 +7,9 @@ import {
   Sparkles, ArrowUpRight, Store
 } from 'lucide-react';
 
+import { useCTAModal } from '../hooks/Usectamodal';
+import CTAModal from './CTAModal';
+
 const industries = [
   {
     title: "E-commerce",
@@ -96,6 +99,8 @@ export default function Industries() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef(null);
+  const { isOpen, source, openModal, closeModal } = useCTAModal();
+
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -145,6 +150,8 @@ export default function Industries() {
       className="relative py-16 md:py-24 overflow-hidden"
       style={{ backgroundColor: '#F7F5F0' }}
     >
+      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
+
       {/* Background depth */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute rounded-full border" style={{ width: 700, height: 700, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', borderColor: 'rgba(120,100,80,0.07)' }} />
@@ -324,13 +331,13 @@ export default function Industries() {
           <p className="mb-4 text-sm" style={{ color: '#9C8E7E' }}>
             Don't see your industry? We adapt to any sector.
           </p>
-          <a
-            href="/contact-us"
+          <button            onClick={() => openModal("Industries Section")}
+            // href="/contact-us"
             className="group inline-flex items-center gap-2 text-white text-sm px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-violet-100 bg-gradient-to-r from-violet-600 to-purple-600"
           >
             Discuss Your Industry Needs
             <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform" />
-          </a>
+          </button>
         </div>
       </div>
     </section>

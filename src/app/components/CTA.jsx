@@ -12,10 +12,14 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+import { useCTAModal } from '../hooks/Usectamodal';
+import CTAModal from './CTAModal';
+
 export default function CTA() {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
+    const { isOpen, source, openModal, closeModal } = useCTAModal();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,6 +49,7 @@ export default function CTA() {
       className="relative py-32 bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
+      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div 
@@ -149,14 +154,13 @@ export default function CTA() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
           >
-            <a
-              href="/contact-us"
+            <button            onClick={() => openModal("CTA Section")}
               className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-10 py-5 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-violet-200 hover:scale-105"
             >
               <span className="relative z-10">Get Started Now</span>
               <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-2 transition-transform" />
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </a>
+            </button>
 
             <a
               href="/portfolio"

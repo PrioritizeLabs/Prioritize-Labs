@@ -1,6 +1,8 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
 import { Sparkles, ArrowRight, Zap, Rocket, Star, Play } from 'lucide-react';
+import { useCTAModal } from '../hooks/Usectamodal';
+import CTAModal from './CTAModal';
 
 const WORDS = ['Web Development', 'Social Media', 'Video Production', 'Brand Identity', 'Creative Strategy'];
 const wordColors = [
@@ -11,6 +13,8 @@ const wordColors = [
   'from-emerald-500 to-teal-500',
 ];
 
+
+
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
@@ -19,6 +23,8 @@ export default function Hero() {
   const [typing, setTyping] = useState(true);
   const canvasRef = useRef(null);
   const animFrameRef = useRef(null);
+const { isOpen, source, openModal, closeModal } = useCTAModal();
+
 
   // Visibility + mouse parallax
   useEffect(() => {
@@ -105,6 +111,8 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen bg-white overflow-hidden flex items-center">
+<CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
+
       {/* Mesh canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none', opacity: 0.65 }} />
 
@@ -221,8 +229,11 @@ export default function Hero() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
         >
-          <a
-            href="/contact-us"
+
+
+          <button
+          onClick={() => openModal("Hero Section")}
+            // href="/contact-us"
             className="group relative inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold text-base sm:text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-violet-300/50 hover:scale-105 w-full sm:w-auto"
           >
             <span className="relative z-10">Get Free Consultation</span>
@@ -230,7 +241,7 @@ export default function Hero() {
             {/* Shine sweep */}
             <span className="absolute inset-0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-white/20 w-1/2" />
             <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </a>
+          </button>
 
           <a
             href="/portfolio"

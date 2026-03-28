@@ -8,6 +8,9 @@ import {
   Sparkles,
   ChevronRight,
 } from 'lucide-react';
+import { useCTAModal } from '../hooks/Usectamodal';
+import CTAModal from './CTAModal';
+
 
 const services = [
   {
@@ -72,6 +75,8 @@ const accentConfig = {
 export default function Services() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+const { isOpen, source, openModal, closeModal } = useCTAModal();
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,6 +93,8 @@ export default function Services() {
       className="relative py-28 overflow-hidden"
       style={{ backgroundColor: '#F7F5F0' }}
     >
+      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
+
       {/* Dot grid */}
       <div
         className="absolute inset-0 opacity-50 pointer-events-none"
@@ -239,14 +246,15 @@ export default function Services() {
           <p className="text-sm" style={{ color: '#9C8E7E' }}>
             Can't find what you're looking for?
           </p>
-          <a
-            href="/contact-us"
+          <button
+          onClick={() => openModal("Services Section")}
+            
             className="inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5"
             style={{ background: '#1C1712', color: '#F7F5F0' }}
           >
             Let's Discuss Your Project
             <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
+          </button>
         </div>
       </div>
 

@@ -1,11 +1,15 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
 import { Target, Lightbulb, Users, Zap, TrendingUp, Award, Shield, Rocket } from 'lucide-react';
+import { useCTAModal } from '../hooks/Usectamodal';
+import CTAModal from './CTAModal';
 
 export default function WhyChoose() {
   const [activeCard, setActiveCard] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const { isOpen, source, openModal, closeModal } = useCTAModal();
+
 
   const features = [
     {
@@ -91,6 +95,8 @@ export default function WhyChoose() {
 
   return (
     <section ref={sectionRef} className="relative py-32 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
+
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-100/60 rounded-full blur-3xl" />
@@ -204,13 +210,13 @@ export default function WhyChoose() {
                 <p className="text-slate-400 text-sm">Join 500+ satisfied clients</p>
               </div>
             </div>
-            <a
-              href="/contact-us"
+            <button
+              onClick={() => openModal("Why Choose Us Section")}
               className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-violet-200 transition-all duration-300 hover:scale-105"
             >
               Let's Talk
               <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-            </a>
+            </button>
           </div>
         </div>
       </div>

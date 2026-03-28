@@ -3,44 +3,48 @@ import { motion } from "framer-motion";
 import { FaRegFilePdf } from "react-icons/fa";
 import { Sparkles, FileText, Eye } from "lucide-react";
 import PdfGallery from "../components/PdfGallery";
+import { ThumbnailSliderCSS } from "../components/Thumbnailslider";
+import { SocialPostSlider } from "../components/Socialpostslider";
+import { ShortsSection } from "../components/Shortssection";
+import { LongFormSection } from "../components/LongFormSection";
 
 export default function Portfolio() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
+        <motion.div
           className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3]
           }}
-          transition={{ 
+          transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             scale: [1.2, 1, 1.2],
             opacity: [0.5, 0.3, 0.5]
           }}
-          transition={{ 
+          transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 1
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"
-          animate={{ 
+          animate={{
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2]
           }}
-          transition={{ 
+          transition={{
             duration: 10,
             repeat: Infinity,
             ease: "easeInOut",
@@ -69,21 +73,47 @@ export default function Portfolio() {
               <span className="text-sm font-medium text-white">Design Portfolio</span>
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </motion.div>
-            
+
             {/* Main Title */}
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
               className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
             >
               <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
-                UI Design PDFs
+                Portfolio
               </span>
             </motion.h1>
-            
+
+            <SocialPostSlider />
+
+            <ThumbnailSliderCSS />
+
+            <ShortsSection />
+            <LongFormSection />
+
             {/* Description */}
-            <motion.p 
+
+
+            <div className="my-8 sm:mb-14 flex items-end justify-between">
+              <div>
+                <p className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-red-500/60 mb-2 sm:mb-3">
+                UI Design Mockups
+                </p>
+                <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white! leading-none tracking-tight">
+                  Website UI{" "}
+                  <span
+                    className="text-red-500"
+                    style={{ fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: "1.1em" }}
+                  >
+                    Designs
+                  </span>
+                </h2>
+              </div>
+              
+            </div>
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
@@ -97,7 +127,7 @@ export default function Portfolio() {
             </motion.p>
 
             {/* Feature Pills */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}

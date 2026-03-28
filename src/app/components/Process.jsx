@@ -9,6 +9,8 @@ import {
   CheckCircle2,
   Sparkles
 } from 'lucide-react';
+import { useCTAModal } from '../hooks/Usectamodal';
+import CTAModal from './CTAModal';
 
 const steps = [
   {
@@ -65,6 +67,8 @@ export default function Process() {
   const [activeStep, setActiveStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const { isOpen, source, openModal, closeModal } = useCTAModal();
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -90,6 +94,8 @@ export default function Process() {
       className="relative py-32 overflow-hidden"
       style={{ backgroundColor: '#F7F5F0' }}
     >
+      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
+
       {/* Blobs */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none animate-pulse"
@@ -305,13 +311,13 @@ export default function Process() {
                 Let's bring your vision to life with our proven process
               </p>
             </div>
-            <a
-              href="/contact-us"
+            <button
+              onClick={() => openModal("Process Section")}
               className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-violet-200 transition-all duration-300 hover:scale-105 whitespace-nowrap"
             >
               Start Your Project
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </button>
           </div>
         </div>
       </div>
