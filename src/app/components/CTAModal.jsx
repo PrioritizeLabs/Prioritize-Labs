@@ -84,8 +84,8 @@ function Field({ icon: Icon, label, error, index, children }) {
       <div
         className={`relative flex items-center rounded-xl border bg-violet-400/60 transition-all duration-200 ${
           error
-            ? "border-violet-500/70 "
-            : "border-violet-700/60 hover:border-slate-500/80"
+            ? "border-red-500/70 "
+            : "border-violet-700/60 "
         }`}
       >
         <Icon
@@ -195,7 +195,7 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
   };
 
   const inputClass =
-    "w-full bg-transparent pl-9 pr-4 py-3 text-sm text-black placeholder:text-slate-600 outline-none rounded-xl";
+    "w-full bg-transparent pl-9 pr-4 py-3 text-sm text-black placeholder:text-black/40 outline-none rounded-xl";
 
   return (
     <AnimatePresence>
@@ -232,7 +232,7 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                 {/* ── Close Button ── */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-slate-800/60 transition-all duration-150"
+                  className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-purple-800/60 transition-all duration-150"
                   aria-label="Close"
                 >
                   <X size={18} />
