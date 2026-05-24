@@ -68,19 +68,6 @@ export default function CTA() {
         />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-fuchsia-100/40 rounded-full blur-3xl" />
 
-        {/* Floating particles */}
-        {[...Array(25)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-violet-400/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${5 + Math.random() * 10}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`
-            }}
-          />
-        ))}
 
         {/* Geometric shapes */}
         <div className="absolute top-10 right-10 w-32 h-32 border-2 border-violet-200/60 rounded-full animate-spin-slow" />

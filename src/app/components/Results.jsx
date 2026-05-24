@@ -116,24 +116,7 @@ export default function Results() {
   return (
     <section ref={sectionRef} className="relative py-32 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
       {/* Background elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-violet-100/50 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/4 w-[600px] h-[600px] bg-emerald-100/40 rounded-full blur-3xl" />
 
-        {/* Floating particles */}
-        {[...Array(30)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-violet-300/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${5 + Math.random() * 10}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`
-            }}
-          />
-        ))}
-      </div>
 
       {/* Grid pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.05)_1px,transparent_1px)] bg-[size:32px_32px]" />
