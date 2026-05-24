@@ -155,8 +155,13 @@ const PDFS = [
   },
 ];
 
-export default function PdfGallery() {
+export default function PdfGallery({ showAll, rowLimit }) {
   const [activePdf, setActivePdf] = useState(null);
+  const ITEMS_PER_ROW = 3; // because lg:grid-cols-3
+
+const visiblePDFs = showAll
+  ? PDFS
+  : PDFS.slice(0, rowLimit * ITEMS_PER_ROW);
 
   return (
     <div className="min-h-screen">
@@ -164,7 +169,7 @@ export default function PdfGallery() {
 
       {/* Gallery */}
       <div className="max-w-7xl mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {PDFS.map((pdf, index) => (
+        {visiblePDFs.map((pdf, index) => (
           <motion.div
             key={pdf.id}
             initial={{ opacity: 0, y: 20 }}

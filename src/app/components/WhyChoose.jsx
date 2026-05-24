@@ -94,13 +94,13 @@ export default function WhyChoose() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+    <section ref={sectionRef} className="relative py-32 bg-gradient-to-tr from-black-950 to-purple-950 overflow-hidden">
       <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
 
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-100/60 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-800/50 rounded-full blur-3xl" />
       </div>
 
       {/* Grid pattern */}
@@ -123,7 +123,7 @@ export default function WhyChoose() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
           >
-            <span className="block mb-2 text-slate-800">Why Choose</span>
+            <span className="block mb-2 text-white">Why Choose</span>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 via-purple-500 to-fuchsia-500">
               PrioritizeLabs?
             </span>
@@ -135,7 +135,7 @@ export default function WhyChoose() {
             }`}
           >
             We're not just another agency. We're your{' '}
-            <span className="text-violet-600 font-semibold relative">
+            <span className="text-violet-100 font-semibold relative">
               strategic partner
               <svg className="absolute -bottom-1 left-0 w-full" height="4" viewBox="0 0 100 4">
                 <path d="M0,2 Q50,0 100,2" stroke="currentColor" strokeWidth="2" fill="none" className="text-violet-400/60" />
@@ -163,9 +163,9 @@ export default function WhyChoose() {
                 <div className={`absolute -inset-1 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500 rounded-2xl`} />
 
                 {/* Card */}
-                <div className={`relative h-full p-8 bg-white border ${feature.border} rounded-2xl transition-all duration-500 shadow-sm group-hover:shadow-md group-hover:-translate-y-2`}>
+                <div className={`relative h-full p-8 bg-black/50 overflow-hidden rounded-2xl transition-all duration-500 shadow-sm group-hover:shadow-md group-hover:-translate-y-2`}>
                   {/* Tinted corner bg */}
-                  <div className={`absolute top-0 right-0 w-28 h-28 ${feature.lightBg} rounded-bl-full opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
+                  <div className={`absolute top-0 right-0 w-28 h-28 ${feature.lightBg} rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
                   {/* Icon */}
                   <div className={`inline-flex p-4 mb-6 rounded-xl ${feature.iconBg} transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}>
@@ -196,7 +196,7 @@ export default function WhyChoose() {
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
-          <div className="inline-flex flex-col sm:flex-row items-center gap-6 p-8 bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-100 rounded-2xl shadow-sm">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-6 p-8 bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-100/10 rounded-2xl shadow-sm">
             <div className="flex items-center gap-4">
               <div className="flex -space-x-3">
                 {[...Array(3)].map((_, i) => (
@@ -206,13 +206,13 @@ export default function WhyChoose() {
                 ))}
               </div>
               <div className="text-left">
-                <p className="text-slate-800 font-semibold text-lg">Ready to elevate your brand?</p>
+                <p className="text-slate-100 font-semibold text-lg">Ready to elevate your brand?</p>
                 <p className="text-slate-400 text-sm">Join 500+ satisfied clients</p>
               </div>
             </div>
             <button
               onClick={() => openModal("Why Choose Us Section")}
-              className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-violet-200 transition-all duration-300 hover:scale-105"
+              className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-violet-900 transition-all duration-300 hover:scale-105"
             >
               Let's Talk
               <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform" />

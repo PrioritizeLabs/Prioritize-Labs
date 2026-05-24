@@ -10,13 +10,15 @@ import CTA from "./components/CTA";
 export default function HomePage() {
   return (
     <>
+
+    
       <Hero />
       <Services />
       <WhyChoose />
       <Process />
-      <Results />
+      {/* <Results /> */}
       <Industries />
-      <CTA />
+      {/* <CTA /> */}
 
     </>
   );

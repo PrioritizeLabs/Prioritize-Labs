@@ -1,31 +1,58 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Download, Pause, Play, Instagram, Twitter, Facebook } from "lucide-react";
+import { useState, useCallback, useEffect, memo } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  X, ChevronLeft, ChevronRight, Download,
+  Pause, Play, Instagram, Twitter, Facebook,
+} from "lucide-react";
 import Image from "next/image";
 
 /* ─────────────────────────────────────────────
-   Data  –  update count / paths to match yours
+   Data  –  all module-level constants (never recreated)
 ───────────────────────────────────────────── */
 const TOTAL = 18;
 
 const posts = Array.from({ length: TOTAL }, (_, i) => ({
-  src: `/social-posts/${i + 1}.png` ,
+  src: `/social-posts/${i + 1}.png`,
   id: i + 1,
-  // Optional: tag each post with a platform label
   platform: ["Instagram", "Twitter", "Facebook"][i % 3],
 }));
 
+// Pre-tripled once at module load — not inside render
+const tripledPosts = [...posts, ...posts, ...posts];
+
 const PLATFORM_ICON = {
-  Instagram: Instagram,
-  Twitter: Twitter,
-  Facebook: Facebook,
+  Instagram,
+  Twitter,
+  Facebook,
 };
 
 /* ─────────────────────────────────────────────
-   Modal
+   Global styles — one constant, one injection
 ───────────────────────────────────────────── */
-function Modal({ post, onClose, onPrev, onNext, total }) {
+const GLOBAL_STYLES = `
+  @keyframes scroll-posts {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-33.333%); }
+  }
+  .post-track {
+    display: flex;
+    gap: clamp(10px, 1.2vw, 20px);
+    width: max-content;
+    animation: scroll-posts 50s linear infinite;
+    will-change: transform;
+  }
+  .post-track.paused { animation-play-state: paused; }
+`;
+
+const StyleInjector = memo(function StyleInjector() {
+  return <style>{GLOBAL_STYLES}</style>;
+});
+
+/* ─────────────────────────────────────────────
+   Modal — memoized, uses Next <Image>, no backdrop-blur
+───────────────────────────────────────────── */
+const Modal = memo(function Modal({ post, onClose, onPrev, onNext, total }) {
   useEffect(() => {
     const handler = (e) => {
       if (e.key === "Escape") onClose();
@@ -50,10 +77,13 @@ function Modal({ post, onClose, onPrev, onNext, total }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
     >
-      {/* Backdrop */}
+      {/* Backdrop — no backdrop-blur, saves a GPU composite layer */}
       <motion.div
-        className="absolute inset-0 bg-black/88 backdrop-blur-xl"
+        className="absolute inset-0 bg-black/90"
         onClick={onClose}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
       />
 
       {/* Close */}
@@ -92,26 +122,28 @@ function Modal({ post, onClose, onPrev, onNext, total }) {
         exit={{ scale: 0.88, y: 20, opacity: 0 }}
         transition={{ type: "spring", stiffness: 340, damping: 28 }}
       >
-        {/* 1:1 image */}
+        {/* Square image — Next/Image for optimisation */}
         <div
           className="relative w-full rounded-2xl overflow-hidden shadow-2xl"
           style={{
-            aspectRatio: "",
+            aspectRatio: "1 / 1",
             border: "1px solid rgba(74,222,128,0.18)",
             boxShadow: "0 0 60px rgba(74,222,128,0.08)",
           }}
         >
-          <img
+          <Image
             src={post.src}
             alt={`Social post #${post.id}`}
-            className="w-full h-full object-fit"
+            fill
+            className="object-cover"
+            sizes="420px"
+            priority          // modal image should load immediately
           />
-          {/* Platform badge overlay */}
+          {/* Platform badge */}
           <div
             className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
             style={{
               background: "rgba(0,0,0,0.55)",
-              backdropFilter: "blur(8px)",
               border: "1px solid rgba(255,255,255,0.1)",
               color: "#4ade80",
             }}
@@ -133,29 +165,19 @@ function Modal({ post, onClose, onPrev, onNext, total }) {
           >
             #{post.id} / {total}
           </span>
-
           {/* Mobile nav */}
           <div className="flex gap-2 sm:hidden">
-            <button
-              onClick={onPrev}
-              className="p-2 rounded-full text-white"
-              style={{ background: "rgba(255,255,255,0.09)" }}
-            >
+            <button onClick={onPrev} className="p-2 rounded-full text-white" style={{ background: "rgba(255,255,255,0.09)" }}>
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button
-              onClick={onNext}
-              className="p-2 rounded-full text-white"
-              style={{ background: "rgba(255,255,255,0.09)" }}
-            >
+            <button onClick={onNext} className="p-2 rounded-full text-white" style={{ background: "rgba(255,255,255,0.09)" }}>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-
           <a
             href={post.src}
             download
-            className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-sm rounded-full text-white transition-all"
+            className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-sm rounded-full transition-all"
             style={{
               background: "rgba(74,222,128,0.12)",
               border: "1px solid rgba(74,222,128,0.3)",
@@ -169,42 +191,46 @@ function Modal({ post, onClose, onPrev, onNext, total }) {
       </motion.div>
     </motion.div>
   );
-}
+});
 
 /* ─────────────────────────────────────────────
-   Post card
+   PostCard — plain button, CSS-only hover effects,
+   no motion.button so Framer Motion doesn't track
+   54 cards simultaneously.
 ───────────────────────────────────────────── */
-function PostCard({ post, onClick }) {
+const PostCard = memo(function PostCard({ post, onClick }) {
   const PlatformIcon = PLATFORM_ICON[post.platform] ?? Instagram;
-
   return (
-    <motion.button
+    <button
       onClick={onClick}
       className="relative flex-shrink-0 rounded-2xl overflow-hidden group cursor-pointer focus:outline-none"
       style={{
         width: "clamp(220px, 24vw, 340px)",
-        aspectRatio: "1/1",
+        aspectRatio: "1 / 1",
+        // CSS scale on hover — zero JS, hardware-accelerated
+        transition: "transform 0.2s cubic-bezier(0.34,1.56,0.64,1)",
       }}
-      whileHover={{ scale: 1.05, zIndex: 10 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: "spring", stiffness: 380, damping: 26 }}
+      onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.05)")}
+      onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+      onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
+      onMouseUp={e => (e.currentTarget.style.transform = "scale(1.05)")}
       aria-label={`Open post #${post.id}`}
     >
       <Image
         src={post.src}
         alt={`Social post ${post.id}`}
         fill
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-106"
-        loading="lazy"
+        className="object-cover"
+        sizes="(max-width: 640px) 220px, (max-width: 1280px) 24vw, 340px"
+        loading="eager"
         draggable={false}
       />
 
-      {/* Hover overlay */}
+      {/* Hover gradient overlay — pure CSS */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.08) 60%, transparent 100%)" }}
       />
-
       {/* Green border glow */}
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300"
@@ -213,33 +239,30 @@ function PostCard({ post, onClick }) {
           boxShadow: "inset 0 0 0 1px rgba(74,222,128,0.15), 0 0 24px rgba(74,222,128,0.12)",
         }}
       />
-
-      {/* Platform icon top-right */}
+      {/* Platform icon */}
       <div
         className="absolute top-2.5 right-2.5 p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)" }}
+        style={{ background: "rgba(0,0,0,0.5)" }}
       >
         <PlatformIcon className="w-3.5 h-3.5" style={{ color: "#4ade80" }} />
       </div>
-
-      {/* Badge bottom-left */}
+      {/* Badge */}
       <div
         className="absolute bottom-2.5 left-3 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ color: "#4ade80" }}
       >
         #{post.id}
       </div>
-
-      {/* Expand hint bottom-right */}
+      {/* Hint */}
       <div
         className="absolute bottom-2.5 right-3 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ color: "rgba(255,255,255,0.5)" }}
       >
         tap to preview
       </div>
-    </motion.button>
+    </button>
   );
-}
+});
 
 /* ─────────────────────────────────────────────
    Main export
@@ -248,9 +271,7 @@ export function SocialPostSlider() {
   const [isPaused, setIsPaused] = useState(false);
   const [modalPost, setModalPost] = useState(null);
 
-  const currentIndex = modalPost
-    ? posts.findIndex((p) => p.id === modalPost.id)
-    : -1;
+  const currentIndex = modalPost ? posts.findIndex((p) => p.id === modalPost.id) : -1;
 
   const handlePrev = useCallback(() => {
     setModalPost(posts[(currentIndex - 1 + posts.length) % posts.length]);
@@ -260,47 +281,30 @@ export function SocialPostSlider() {
     setModalPost(posts[(currentIndex + 1) % posts.length]);
   }, [currentIndex]);
 
-  // Tripled for seamless CSS loop
-  const tripled = [...posts, ...posts, ...posts];
+  const handleClose = useCallback(() => setModalPost(null), []);
 
   return (
     <div
       id="social-posts"
-      className="w-full overflow-hidden py-10 sm:py-16 bg-linear-1200 from-[#080a0f] via-[#11331d] to-[#080a0f] relative"
-      style={{ background: "", fontFamily: "'Syne', sans-serif" }}
+      className="w-full overflow-hidden py-10 sm:py-16 relative"
+      style={{ background: "#080a0f", fontFamily: "'Syne', sans-serif" }}
     >
-      <style>{`
-       
-
-        @keyframes scroll-posts {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-33.333%); }
-        }
-        .post-track {
-          display: flex;
-          gap: clamp(10px, 1.2vw, 20px);
-          width: max-content;
-          animation: scroll-posts 50s linear infinite;
-        }
-        .post-track.paused {
-          animation-play-state: paused;
-        }
-      `}</style>
+      <StyleInjector />
 
       <div className="relative">
-        {/* ── Header ── */}
+        {/* Header */}
         <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-8 sm:mb-10">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p
                 className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-2"
-                style={{ color: "rgba(74,222,128,0.65)", fontFamily: "'Syne', sans-serif" }}
+                style={{ color: "rgba(74,222,128,0.65)" }}
               >
                 Creative Portfolio
               </p>
               <h2
-                className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white! leading-tight"
-                style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800 }}
+                className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight"
+                style={{ fontWeight: 800 }}
               >
                 Social{" "}
                 <span
@@ -332,32 +336,24 @@ export function SocialPostSlider() {
               {isPaused ? (
                 <>
                   <Play className="w-4 h-4" style={{ fill: "#4ade80", color: "#4ade80" }} />
-                  <span className="text-sm hidden sm:inline" style={{ color: "#4ade80" }}>
-                    Resume
-                  </span>
+                  <span className="text-sm hidden sm:inline" style={{ color: "#4ade80" }}>Resume</span>
                 </>
               ) : (
                 <>
                   <Pause className="w-4 h-4" style={{ fill: "rgba(255,255,255,0.45)", color: "rgba(255,255,255,0.45)" }} />
-                  <span className="text-sm hidden sm:inline" style={{ color: "rgba(255,255,255,0.4)" }}>
-                    Pause
-                  </span>
+                  <span className="text-sm hidden sm:inline" style={{ color: "rgba(255,255,255,0.4)" }}>Pause</span>
                 </>
               )}
             </button>
           </div>
 
-          {/* Divider */}
           <div
             className="mt-6 h-px"
-            style={{
-              background:
-                "linear-gradient(to right, transparent, rgba(74,222,128,0.12), transparent)",
-            }}
+            style={{ background: "linear-gradient(to right, transparent, rgba(74,222,128,0.12), transparent)" }}
           />
         </div>
 
-        {/* ── Edge fades ── */}
+        {/* Edge fades */}
         <div
           className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to right, #080a0f, transparent)" }}
@@ -367,10 +363,10 @@ export function SocialPostSlider() {
           style={{ background: "linear-gradient(to left, #080a0f, transparent)" }}
         />
 
-        {/* ── Slider track ── */}
+        {/* Slider track — uses pre-tripled module-level array */}
         <div className="py-3 sm:py-4">
           <div className={`post-track${isPaused ? " paused" : ""}`}>
-            {tripled.map((post, idx) => (
+            {tripledPosts.map((post, idx) => (
               <PostCard
                 key={`${post.id}-${idx}`}
                 post={post}
@@ -381,13 +377,13 @@ export function SocialPostSlider() {
         </div>
       </div>
 
-      {/* ── Modal ── */}
+      {/* Modal */}
       <AnimatePresence>
         {modalPost && (
           <Modal
             post={modalPost}
             total={TOTAL}
-            onClose={() => setModalPost(null)}
+            onClose={handleClose}
             onPrev={handlePrev}
             onNext={handleNext}
           />

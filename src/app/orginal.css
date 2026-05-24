@@ -1,0 +1,426 @@
+@import "tailwindcss";
+
+:root {
+  --font-heading: var(--font-neue-kaine);
+  --font-body: var(--font-geist-sans); 
+}
+
+
+
+body {
+  font-family: var(--font-body);
+  background-color: #0a0a0a;
+  color: #111111;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-neue-kaine);
+  font-weight: 900;
+  letter-spacing: 0.1;
+  color: #0c0c0c;
+}
+
+/* Purple glow utility */
+.glow {
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.35);
+}
+
+.page-grid-bg {
+  min-height: 100vh;
+  width: 100%;
+  /* background-color: #050505; */
+
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.15) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(168, 85, 247, 0.1), transparent 70%);
+
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+}
+
+/* Custom Scrollbar - Purple & Black Theme */
+
+/* Webkit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8B5CF6 0%, #6D28D9 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7C3AED 0%, #5B21B6 100%);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8B5CF6 #000000;
+}
+
+
+/* Glassmorphism Styles */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Swiper Custom Styles */
+.swiper {
+  padding-bottom: 60px !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #a855f7 !important;
+  background: rgba(0, 0, 0, 0.5);
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px !important;
+  font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(168, 85, 247, 0.3);
+  border-color: rgba(168, 85, 247, 0.5);
+  transform: scale(1.1);
+}
+
+.swiper-button-disabled {
+  opacity: 0.3 !important;
+}
+
+/* Swiper Pagination */
+.swiper-pagination {
+  bottom: 20px !important;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(168, 85, 247, 0.5) !important;
+  width: 12px !important;
+  height: 12px !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet:hover {
+  background: rgba(168, 85, 247, 0.8) !important;
+  transform: scale(1.2);
+}
+
+.swiper-pagination-bullet-active {
+  background: #a855f7 !important;
+  width: 30px !important;
+  border-radius: 6px !important;
+}
+
+/* Swiper Slide Styles */
+.swiper-slide {
+  transition: all 0.3s ease;
+}
+
+.swiper-slide-active {
+  z-index: 10;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.8);
+}
+
+/* Animation Utilities */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Gradient Text Animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+button:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 4px;
+}
+
+/* Selection Styles */
+::selection {
+  background-color: rgba(168, 85, 247, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: rgba(168, 85, 247, 0.3);
+  color: white;
+}
+
+/* Smooth Transitions */
+a,
+button,
+input,
+textarea,
+select {
+  transition: all 0.3s ease;
+}
+
+
+
+/* Prevent Layout Shift */
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+/* Loading State */
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 16px !important;
+  }
+}
+
+/* Reduce Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .swiper-button-next,
+  .swiper-button-prev,
+  .swiper-pagination {
+    display: none !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .glass,
+  .glass-strong {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Dark Mode Support (if needed) */
+@media (prefers-color-scheme: dark) {
+  /* Already dark theme, but can add overrides if needed */
+}
+
+
+
+ /* Slider */
+  .slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+  }
+
+  .slider-track {
+    display: flex;
+    width: fit-content;
+    gap: 10px;
+    animation: marquee 50s linear infinite;
+  }
+
+  .slider-track-reverse {
+    display: flex;
+    width: fit-content;
+    gap: 10px;
+    animation: reverseMarquee 50s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes reverseMarquee {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .slider-track:hover,
+  .slider-track-reverse:hover {
+    animation-play-state: paused;
+  }
+
+  /* Text Slider */
+  .text-slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+  }
+
+  .text-slider-track {
+    display: flex;
+    width: fit-content;
+    gap: 20px;
+    animation: textMarquee 25s linear infinite;
+  }
+
+  .text-slide {
+    font-size: 48px;
+    font-weight: 700;
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+
+  @keyframes textMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+
+
+
+/* Add these styles to your globals.css file */
+
+@keyframes infinite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-400px * 26 - 24px * 26)); /* width * count + gap * count */
+  }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 60s linear infinite;
+}
+
+.pause-animation:hover {
+  animation-play-state: paused;
+}
+
+/* Swiper Custom Styles */
+.thumbnail-swiper {
+  width: 100%;
+  height: auto;
+}
+
+.thumbnail-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+/* Glass effect for thumbnails */
+.glass-pro {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+
+
