@@ -36,10 +36,12 @@ const neueKaine = localFont({
 
 
 export const metadata = {
-  title: "PrioritizeLabs | Digital Creative Agency",
+  title: "Prioritize Labs | Growth Engineering for Ambitious Brands",
   description:
-    "PrioritizeLabs is a digital creative agency specializing in web development, social media, video production, 3D visualization, and creative staffing.",
+    "We build the complete growth engine — performance marketing, technology, and creative — so Indian founders see revenue, not just reach.",
 };
+
+
 
 export default function RootLayout({ children }) {
   return (

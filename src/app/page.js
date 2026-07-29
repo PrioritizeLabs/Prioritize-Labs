@@ -16,7 +16,7 @@ export default function HomePage() {
       <Services />
       <WhyChoose />
       <Process />
-      {/* <Results /> */}
+      <Results />
       <Industries />
       {/* <CTA /> */}
 
