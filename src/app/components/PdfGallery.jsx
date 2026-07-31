@@ -155,7 +155,10 @@ const PDFS = [
   },
 ];
 
-export default function PdfGallery({ showAll, rowLimit }) {
+export default function PdfGallery({
+  showAll = true,
+  rowLimit = 3,
+}) {
   const [activePdf, setActivePdf] = useState(null);
   const ITEMS_PER_ROW = 3; // because lg:grid-cols-3
 
@@ -251,7 +254,7 @@ function PdfCard({ pdf, onOpen }) {
         </div>
 
         {/* Metadata */}
-        <div className="flex items-center gap-4 text-xs text-zinc-500">
+        <div className="flex items-center justify-center gap-4 text-xs text-zinc-500">
           <div className="flex items-center gap-1.5">
             <div className="h-1.5 w-1.5 rounded-full bg-zinc-600" />
             {pdf.pages} pages

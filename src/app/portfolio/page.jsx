@@ -53,8 +53,8 @@ export default function Portfolio() {
         />
       </div>
 
-      <div className="relative px-6 py-10 md:py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl">
+      <div className="relative  py-10 md:py-16 lg:py-20">
+        <div className="mx-auto">
           {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: -30 }}
@@ -62,26 +62,16 @@ export default function Portfolio() {
             transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
             className="mb-16 md:mb-20"
           >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm px-5 py-2.5 mb-8 border border-white/10 shadow-lg shadow-blue-500/5"
-            >
-              <Sparkles className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Design Portfolio</span>
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            </motion.div>
+            
 
             {/* Main Title */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight text-center"
             >
-              <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent ">
                 Portfolio
               </span>
             </motion.h1>
@@ -96,66 +86,83 @@ export default function Portfolio() {
             {/* Description */}
 
 
-            <div className="my-8 sm:mb-14 flex items-end justify-between">
-              <div>
-                <p className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-red-500/60 mb-2 sm:mb-3">
-                UI Design Mockups
-                </p>
-                <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white! leading-none tracking-tight">
-                  Website UI{" "}
-                  <span
-                    className="text-red-500"
-                    style={{ fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: "1.1em" }}
-                  >
-                    Designs
-                  </span>
-                </h2>
-              </div>
-              
-            </div>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="text-lg md:text-xl text-zinc-400 max-w-3xl leading-relaxed mb-8"
-            >
-              Explore our collection of carefully crafted UI design mockups and documentation.
-              <br />
-              <span className="text-zinc-500 text-base">
-                Hover to preview scroll • Click to open full PDF
-              </span>
-            </motion.p>
-
-            {/* Feature Pills */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-              className="flex flex-wrap items-center gap-3"
-            >
-              <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
-                <Eye className="h-4 w-4 text-blue-400" />
-                <span className="text-sm text-zinc-300">Interactive Preview</span>
-              </div>
-              <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
-                <FileText className="h-4 w-4 text-purple-400" />
-                <span className="text-sm text-zinc-300">High Quality</span>
-              </div>
-              <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
-                <FaRegFilePdf className="h-4 w-4 text-red-400" />
-                <span className="text-sm text-zinc-300">PDF Format</span>
-              </div>
-            </motion.div>
+            
           </motion.div>
 
           {/* Gallery */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <PdfGallery />
-          </motion.div>
+
+          <div className="flex flex-col items-center text-center">
+  {/* Heading */}
+  <div className="my-8 sm:mb-14">
+    <p className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-red-500/60 mb-2 sm:mb-3">
+      UI Design Mockups
+    </p>
+
+    <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-none tracking-tight">
+      Website UI{" "}
+      <span
+        className="text-red-500"
+        style={{
+          fontFamily: "'Instrument Serif', serif",
+          fontStyle: "italic",
+          fontWeight: 400,
+          fontSize: "1.1em",
+        }}
+      >
+        Designs
+      </span>
+    </h2>
+  </div>
+
+  {/* Description */}
+  <motion.p
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7, delay: 0.4 }}
+    className="text-lg md:text-xl text-zinc-400 max-w-3xl leading-relaxed mb-8"
+  >
+    Explore our collection of carefully crafted UI design mockups and
+    documentation.
+    <br />
+    <span className="text-zinc-500 text-base">
+      Hover to preview scroll • Click to open full PDF
+    </span>
+  </motion.p>
+
+  {/* Feature Pills */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7, delay: 0.5 }}
+    className="flex flex-wrap justify-center items-center gap-3 mb-12"
+  >
+    <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
+      <Eye className="h-4 w-4 text-blue-400" />
+      <span className="text-sm text-zinc-300">Interactive Preview</span>
+    </div>
+
+    <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
+      <FileText className="h-4 w-4 text-purple-400" />
+      <span className="text-sm text-zinc-300">High Quality</span>
+    </div>
+
+    <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
+      <FaRegFilePdf className="h-4 w-4 text-red-400" />
+      <span className="text-sm text-zinc-300">PDF Format</span>
+    </div>
+  </motion.div>
+
+  {/* Gallery */}
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, delay: 0.6 }}
+    className="mt-4 w-full"
+  >
+    <PdfGallery />
+  </motion.div>
+</div>
+          
         </div>
       </div>
 
