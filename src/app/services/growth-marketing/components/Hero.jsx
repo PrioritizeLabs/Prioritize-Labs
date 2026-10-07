@@ -19,11 +19,11 @@ export default function Hero() {
   const { openModal } = useCTAModal();
 
   return (
-    <section id="top" className="relative overflow-hidden pb-20 pt-[168px] sm:pt-[188px]">
+    <section id="top" className="relative overflow-hidden py-20 min-h-screen">
       <AmbientBackground variant="top" />
 
       {/* AI core, positioned as an ambient full-bleed backdrop behind the copy */}
-      <div className="pointer-events-none absolute right-[-120px] top-[100px] h-[560px] w-[560px] opacity-70 sm:right-[-40px] md:right-[-60px] lg:right-[20px]">
+      <div className="pointer-events-none max-md:hidden md:absolute right-[-120px] top-[100px] h-[560px] w-[560px] opacity-70 sm:right-[-40px] md:right-[-60px] lg:right-[1px]">
         <AICore className="h-full w-full" />
       </div>
 
