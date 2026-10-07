@@ -285,6 +285,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from 'react';
+import { useHydrated } from "../hooks/useHydrated";
 import { 
   TrendingUp, 
   Target, 
@@ -371,19 +372,14 @@ const results = [
 ];
 
 export default function Results() {
-  const [isMounted, setIsMounted] = useState(false);
+  const isHydrated = useHydrated();
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [counters, setCounters] = useState(results.map(() => 0));
   const sectionRef = useRef(null);
 
-  // Fix: Ensure component is safely mounted before rendering client-side specific dynamic styles
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isMounted) return;
+    if (!isHydrated) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -391,26 +387,25 @@ export default function Results() {
       },
       { threshold: 0.2 }
     );
-    
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    
+    const section = sectionRef.current;
+    if (section) observer.observe(section);
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
+      if (section) observer.unobserve(section);
     };
-  }, [isMounted]);
+  }, [isHydrated]);
 
   useEffect(() => {
-    if (!isVisible || !isMounted) return;
+    if (!isVisible || !isHydrated) return;
     
     const interval = setInterval(() => {
       setCounters(prev => prev.map(val => val < 100 ? Math.min(val + 2, 100) : val));
     }, 20);
     
     return () => clearInterval(interval);
-  }, [isVisible, isMounted]);
+  }, [isVisible, isHydrated]);
 
   // Provide a safe default for SSR to prevent hydration jumps
-  const animateState = isMounted && isVisible;
+  const animateState = isHydrated && isVisible;
 
   return (
     <section ref={sectionRef} className="relative py-32 bg-gradient-to-b from-slate-950 to-slate-900 overflow-hidden text-slate-200">
@@ -446,7 +441,7 @@ export default function Results() {
               animateState ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
           >
-            Real outcomes from real partnerships. Here's what you can expect when working with us.
+            Real outcomes from real partnerships. Here&apos;s what you can expect when working with us.
           </p>
         </div>
 
@@ -499,7 +494,7 @@ export default function Results() {
                     <div className="mt-4 relative h-2 bg-slate-800 rounded-full overflow-hidden">
                       <div 
                         className={`absolute inset-y-0 left-0 bg-gradient-to-r ${item.progressColor} rounded-full transition-all duration-1000 ease-out`}
-                        style={{ width: isMounted ? `${progress}%` : '0%' }}
+                        style={{ width: isHydrated ? `${progress}%` : '0%' }}
                       />
                     </div>
                   </div>

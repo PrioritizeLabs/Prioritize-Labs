@@ -335,6 +335,8 @@
 
 "use client"
 import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   Sparkles,
   Mail,
@@ -346,11 +348,10 @@ import {
   Linkedin,
   Youtube,
   ArrowRight,
-  Code2,
-  Video,
-  Users,
   Heart,
-  Paintbrush2
+  Paintbrush2,
+  Cpu,
+  TrendingUp,
 } from 'lucide-react';
 
 export default function Footer() {
@@ -358,10 +359,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const services = [
-    { icon: Code2, name: 'Web Development', href: '/services/web-dev' },
-    { icon: Paintbrush2, name: 'Social Media Management', href: '/services/creative-services' },
-    { icon: Video, name: 'Video Production', href: '/services/video-production' },
-    // { icon: Users, name: 'Creative Staffing', href: '/services/creative-staffing' }
+    { icon: TrendingUp, name: 'Growth Marketing', href: '/services/growth-marketing' },
+    { icon: Paintbrush2, name: 'Creative Production', href: '/services/creative-services' },
+    { icon: Cpu, name: 'Technology & Automation', href: '/services/technology' },
   ];
 
   const company = [
@@ -442,11 +442,17 @@ export default function Footer() {
           {/* Company info */}
           <div className="lg:col-span-2">
             <a href="#home" className="flex items-center gap-2 mb-6">
-              <img src="/prioritizelabs_logo.png" alt="PrioritizeLabs Logo" className="h-12 w-fit object-contain brightness-115" />
+              <Image
+                src="/prioritizelabs_logo.png"
+                alt="PrioritizeLabs Logo"
+                className="h-12 w-fit object-contain brightness-115"
+                width={200}
+                height={52}
+              />
             </a>
 
             <p className="leading-relaxed mb-6 text-sm" style={{ color: '#9CA3AF', fontWeight: 300 }}>
-              Your complete digital creative partner, delivering innovative solutions across web development, social media, video production, and more.
+              Your growth partner for marketing, creative production, and technology and automation.
             </p>
 
             {/* Contact */}
@@ -532,7 +538,7 @@ export default function Footer() {
                 const Icon = service.icon;
                 return (
                   <li key={service.name}>
-                    <a
+                    <Link
                       href={service.href}
                       className="flex items-center gap-2 text-sm transition-colors group"
                       style={{ color: '#9CA3AF' }}
@@ -541,7 +547,7 @@ export default function Footer() {
                     >
                       <Icon className="w-3.5 h-3.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                       <span>{service.name}</span>
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
@@ -578,21 +584,25 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-center md:text-left" style={{ color: '#9CA3AF' }}>
               © {currentYear} PrioritizeLabs. All rights reserved. Made with{' '}
-              <Heart className="inline w-3.5 h-3.5 text-red-400 fill-current" /> by our amazing team.
+              <Heart className="inline w-3.5 h-3.5 text-violet-400 fill-current" /> by our amazing team.
             </div>
 
             <div className="flex items-center gap-6">
-              {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((label) => (
-                <a
+              {[
+                { label: 'Privacy Policy', href: '/privacy-policy' },
+                { label: 'Terms & Conditions', href: '/terms-and-conditions' },
+                { label: 'Refund Policy', href: '/refund-policy' },
+              ].map(({ label, href }) => (
+                <Link
                   key={label}
-                  href={`#${label.toLowerCase().replace(/ /g, '-')}`}
+                  href={href}
                   className="text-sm transition-colors"
                   style={{ color: '#9CA3AF' }}
                   onMouseEnter={e => e.target.style.color = '#A78BFA'}
                   onMouseLeave={e => e.target.style.color = '#9CA3AF'}
                 >
                   {label}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

@@ -2,13 +2,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Target, Lightbulb, Users, Zap, TrendingUp, Award, Shield, Rocket } from 'lucide-react';
 import { useCTAModal } from '../hooks/Usectamodal';
-import CTAModal from './CTAModal';
 
 export default function WhyChoose() {
   const [activeCard, setActiveCard] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
-  const { isOpen, source, openModal, closeModal } = useCTAModal();
+  const { openModal } = useCTAModal();
 
 
   const features = [
@@ -87,15 +86,15 @@ export default function WhyChoose() {
       },
       { threshold: 0.1 }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    const section = sectionRef.current;
+    if (section) observer.observe(section);
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
+      if (section) observer.unobserve(section);
     };
   }, []);
 
   return (
     <section ref={sectionRef} className="relative py-32 bg-gradient-to-tr from-black-950 to-purple-950 overflow-hidden">
-      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
 
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
@@ -134,7 +133,7 @@ export default function WhyChoose() {
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
           >
-            We're not just another agency. We're your{' '}
+            We&apos;re not just another agency. We&apos;re your{' '}
             <span className="text-violet-100 font-semibold relative">
               strategic partner
               <svg className="absolute -bottom-1 left-0 w-full" height="4" viewBox="0 0 100 4">
@@ -214,7 +213,7 @@ export default function WhyChoose() {
               onClick={() => openModal("Why Choose Us Section")}
               className="group inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-violet-900 transition-all duration-300 hover:scale-105"
             >
-              Let's Talk
+              Let&apos;s Talk
               <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform" />
             </button>
           </div>

@@ -438,14 +438,9 @@ import {
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGfy46V8PY5561MoiFaLQuOojdjwelF4JtgcpjXLVJGpifBFBOj2W4fwLHP9tpTfnZ/exec"; 
 
 const SERVICES = [
-  "Graphic Design",
-  "Video Editing",
-  "Website Development",
-  "App Development",
-  "Social Media Marketing",
-  "Digital Marketing",
-  "Video Production",
-  "Other",
+  "Growth Marketing",
+  "Creative Production",
+  "Technology & Automation",
 ];
 
 // ─── ANIMATION VARIANTS ───────────────────────────────────────────────────────
@@ -668,10 +663,10 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                     </span>
                   </div>
                   <h2 className="text-xl font-bold text-gray-100 tracking-tight">
-                    Let's Build Something Great
+                    Let&apos;s Build Something Great
                   </h2>
                   <p className="mt-1 text-sm text-gray-400">
-                    Fill in your details and we'll get back to you within 24 hours.
+                    Fill in your details and we&apos;ll get back to you within 24 hours.
                   </p>
                 </motion.div>
 
@@ -690,7 +685,7 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                       </div>
                       <div>
                         <p className="text-lg font-semibold text-green-400">
-                          We've got your details!
+                          We&apos;ve got your details!
                         </p>
                         <p className="mt-1 text-sm text-gray-400">
                           Our team will reach out to you shortly.

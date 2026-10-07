@@ -1,25 +1,14 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useContext } from "react";
+import { CTAModalContext } from "./CTAModalContext";
 
-/**
- * useCTAModal — lightweight hook to control the CTA modal
- *
- * Usage:
- *   const { isOpen, source, openModal, closeModal } = useCTAModal();
- */
 export function useCTAModal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [source, setSource] = useState("Website CTA");
+  const context = useContext(CTAModalContext);
 
-  const openModal = useCallback((src = "Website CTA") => {
-    setSource(src);
-    setIsOpen(true);
-  }, []);
+  if (!context) {
+    throw new Error("useCTAModal must be used within CTAProvider");
+  }
 
-  const closeModal = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
-  return { isOpen, source, openModal, closeModal };
+  return context;
 }

@@ -338,7 +338,6 @@ import {
   Sparkles
 } from 'lucide-react';
 import { useCTAModal } from '../hooks/Usectamodal';
-import CTAModal from './CTAModal';
 
 const steps = [
   {
@@ -395,15 +394,16 @@ export default function Process() {
   const [activeStep, setActiveStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
-  const { isOpen, source, openModal, closeModal } = useCTAModal();
+  const { openModal } = useCTAModal();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
       { threshold: 0.1 }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => { if (sectionRef.current) observer.unobserve(sectionRef.current); };
+    const section = sectionRef.current;
+    if (section) observer.observe(section);
+    return () => { if (section) observer.unobserve(section); };
   }, []);
 
   useEffect(() => {
@@ -421,7 +421,6 @@ export default function Process() {
       className="relative py-32 overflow-hidden"
       style={{ backgroundColor: '#0B0A12' }}
     >
-      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
 
       {/* Blobs */}
       <div
@@ -636,7 +635,7 @@ export default function Process() {
                 Ready to get started?
               </p>
               <p className="text-sm" style={{ color: '#9CA3AF' }}>
-                Let's bring your vision to life with our proven process
+                Let&apos;s bring your vision to life with our proven process
               </p>
             </div>
             <button

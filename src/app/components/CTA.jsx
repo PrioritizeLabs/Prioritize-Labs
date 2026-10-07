@@ -13,13 +13,12 @@ import {
 } from 'lucide-react';
 
 import { useCTAModal } from '../hooks/Usectamodal';
-import CTAModal from './CTAModal';
 
 export default function CTA() {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
-    const { isOpen, source, openModal, closeModal } = useCTAModal();
+  const { openModal } = useCTAModal();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,9 +27,10 @@ export default function CTA() {
       },
       { threshold: 0.1 }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    const section = sectionRef.current;
+    if (section) observer.observe(section);
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
+      if (section) observer.unobserve(section);
     };
   }, []);
 
@@ -49,7 +49,6 @@ export default function CTA() {
       className="relative py-32 bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
-      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div 

@@ -14,7 +14,7 @@ export default function Portfolio() {
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
+          className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -39,7 +39,7 @@ export default function Portfolio() {
           }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2]
@@ -94,14 +94,14 @@ export default function Portfolio() {
           <div className="flex flex-col items-center text-center">
   {/* Heading */}
   <div className="my-8 sm:mb-14">
-    <p className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-red-500/60 mb-2 sm:mb-3">
+    <p className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-violet-300 mb-2 sm:mb-3">
       UI Design Mockups
     </p>
 
     <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-none tracking-tight">
       Website UI{" "}
       <span
-        className="text-red-500"
+        className="text-violet-300"
         style={{
           fontFamily: "'Instrument Serif', serif",
           fontStyle: "italic",
@@ -137,17 +137,17 @@ export default function Portfolio() {
     className="flex flex-wrap justify-center items-center gap-3 mb-12"
   >
     <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
-      <Eye className="h-4 w-4 text-blue-400" />
+      <Eye className="h-4 w-4 text-violet-300" />
       <span className="text-sm text-zinc-300">Interactive Preview</span>
     </div>
 
     <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
-      <FileText className="h-4 w-4 text-purple-400" />
+      <FileText className="h-4 w-4 text-violet-300" />
       <span className="text-sm text-zinc-300">High Quality</span>
     </div>
 
     <div className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm px-4 py-2.5 border border-white/10">
-      <FaRegFilePdf className="h-4 w-4 text-red-400" />
+      <FaRegFilePdf className="h-4 w-4 text-violet-300" />
       <span className="text-sm text-zinc-300">PDF Format</span>
     </div>
   </motion.div>

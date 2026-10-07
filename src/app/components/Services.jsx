@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Code2, Paintbrush2, Video, ArrowUpRight, Sparkles, TrendingUp, LucidePaintbrush2, Cpu } from "lucide-react";
 import { useCTAModal } from "../hooks/Usectamodal";
-import CTAModal from "./CTAModal";
 
 /* ─── Data ─────────────────────────────────────────────────────── */
 
@@ -173,14 +172,12 @@ function ServiceCard({ service, index }) {
 
 /* ─── Section ───────────────────────────────────────────────────── */
 export default function Services() {
-  const { isOpen, source, openModal, closeModal } = useCTAModal();
+  const { openModal } = useCTAModal();
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true, margin: "-80px" });
 
   return (
     <section className="relative py-32 overflow-hidden bg-black text-white">
-      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
-
       {/* Background layer */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,#2d1060_0%,transparent_70%)]" />
 

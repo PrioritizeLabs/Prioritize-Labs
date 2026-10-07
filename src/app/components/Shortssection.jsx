@@ -1,7 +1,8 @@
 "use client";
-import { useState, useCallback, useEffect, useRef, memo } from "react";
+import { useState, useCallback, useEffect, useRef, memo, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Youtube, Play, X } from "lucide-react";
+import Image from "next/image";
 
 /* ─────────────────────────────────────────────
    Data
@@ -59,20 +60,40 @@ const StyleInjector = memo(function StyleInjector() {
 ───────────────────────────────────────────── */
 const DESKTOP = { center: 260, side: 170, gap: 18 };
 const MOBILE  = { center: 175, side: 105, gap: 12 };
+const subscribeToMobileBreakpoint = (callback) => {
+  const mediaQuery = window.matchMedia("(max-width: 599px)");
+  mediaQuery.addEventListener("change", callback);
+  return () => mediaQuery.removeEventListener("change", callback);
+};
+const getMobileSnapshot = () => window.matchMedia("(max-width: 599px)").matches;
+const getServerMobileSnapshot = () => false;
 
 /* ─────────────────────────────────────────────
    useSwiper
 ───────────────────────────────────────────── */
 function useSwiper(count) {
-  const [active, setActive] = useState(0);
+  const [slideState, setSlideState] = useState({ active: 0, isPlaying: false });
   const [drag, setDrag]     = useState(0);
   const [dragging, setDragging] = useState(false);
   const startX  = useRef(null);
   const didDrag = useRef(false);
 
-  const prev  = useCallback(() => setActive(i => Math.max(0, i - 1)), []);
-  const next  = useCallback(() => setActive(i => Math.min(count - 1, i + 1)), [count]);
-  const goTo  = useCallback((i) => setActive(i), []);
+  const prev = useCallback(
+    () => setSlideState((state) => ({ active: Math.max(0, state.active - 1), isPlaying: false })),
+    [],
+  );
+  const next = useCallback(
+    () => setSlideState((state) => ({ active: Math.min(count - 1, state.active + 1), isPlaying: false })),
+    [count],
+  );
+  const goTo = useCallback(
+    (active) => setSlideState({ active, isPlaying: false }),
+    [],
+  );
+  const handlePlay = useCallback(
+    () => setSlideState((state) => ({ ...state, isPlaying: !state.isPlaying })),
+    [],
+  );
 
   useEffect(() => {
     const h = (e) => {
@@ -106,7 +127,20 @@ function useSwiper(count) {
     setTimeout(() => { didDrag.current = false; }, 60);
   }, [next, prev]);
 
-  return { active, drag, dragging, didDrag, prev, next, goTo, onDown, onMove, onUp };
+  return {
+    active: slideState.active,
+    isPlaying: slideState.isPlaying,
+    handlePlay,
+    drag,
+    dragging,
+    didDrag,
+    prev,
+    next,
+    goTo,
+    onDown,
+    onMove,
+    onUp,
+  };
 }
 
 /* ─────────────────────────────────────────────
@@ -157,7 +191,7 @@ const SlideCard = memo(function SlideCard({
           style={{
             inset: "-16px",
             borderRadius: "1.8rem",
-            background: "radial-gradient(ellipse at center, rgba(239,68,68,0.2) 0%, transparent 68%)",
+            background: "radial-gradient(ellipse at center, rgba(139,92,246,0.22) 0%, transparent 68%)",
             zIndex: -1,
           }}
         />
@@ -173,24 +207,27 @@ const SlideCard = memo(function SlideCard({
           position: "relative",
           cursor: "pointer",
           border: isCenter
-            ? "1.5px solid rgba(239,68,68,0.45)"
+            ? "1.5px solid rgba(167,139,250,0.5)"
             : "1px solid rgba(255,255,255,0.06)",
           boxShadow: isCenter
-            ? "0 0 40px rgba(239,68,68,0.15), 0 24px 60px rgba(0,0,0,0.55)"
+            ? "0 0 40px rgba(139,92,246,0.18), 0 24px 60px rgba(0,0,0,0.55)"
             : "0 8px 24px rgba(0,0,0,0.35)",
         }}
       >
         {/* Red top bar */}
         {isCenter && (
           <div className="absolute top-0 inset-x-0 h-[2.5px] z-10"
-            style={{ background: "linear-gradient(90deg, #ef4444, #f97316, #ef4444)" }} />
+            style={{ background: "linear-gradient(90deg, #8b5cf6, #c084fc, #8b5cf6)" }} />
         )}
 
         {/* Thumbnail */}
-        <img
+        <Image
           src={thumb(short.id)}
           alt={short.title}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          fill
+          sizes="(max-width: 600px) 175px, 260px"
+          className="object-cover"
+          unoptimized
           loading={Math.abs(offset) <= 1 ? "eager" : "lazy"}
           draggable={false}
         />
@@ -216,9 +253,9 @@ const SlideCard = memo(function SlideCard({
               <div style={{
                 padding: w > 200 ? "18px" : "14px",
                 borderRadius: "50%",
-                background: "rgba(239,68,68,0.18)",
-                border: "1.5px solid rgba(239,68,68,0.55)",
-                boxShadow: "0 0 28px rgba(239,68,68,0.22)",
+                background: "rgba(139,92,246,0.2)",
+                border: "1.5px solid rgba(167,139,250,0.55)",
+                boxShadow: "0 0 28px rgba(139,92,246,0.26)",
               }}>
                 <Play style={{
                   width: w > 200 ? 28 : 20,
@@ -241,13 +278,13 @@ const SlideCard = memo(function SlideCard({
               <div style={{
                 display: "inline-flex", alignItems: "center", gap: 5,
                 padding: "3px 9px", borderRadius: 99, marginBottom: 8,
-                background: "rgba(239,68,68,0.18)",
-                border: "1px solid rgba(239,68,68,0.3)",
+                background: "rgba(139,92,246,0.2)",
+                border: "1px solid rgba(167,139,250,0.35)",
                 fontSize: 9, fontWeight: 700, letterSpacing: "0.18em",
-                textTransform: "uppercase", color: "#fca5a5",
+                textTransform: "uppercase", color: "#c4b5fd",
                 fontFamily: "'Syne', sans-serif",
               }}>
-                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#a78bfa", display: "inline-block" }} />
                 Shorts
               </div>
               <p style={{
@@ -342,7 +379,7 @@ const DotStrip = memo(function DotStrip({ count, active, goTo }) {
             style={{
               width: isAct ? 22 : 6, height: 6,
               borderRadius: 3, padding: 0,
-              background: isAct ? "#ef4444" : "rgba(255,255,255,0.18)",
+              background: isAct ? "#8b5cf6" : "rgba(255,255,255,0.18)",
               border: "none", cursor: "pointer",
               transition: "width 0.25s ease, background 0.2s ease",
             }}
@@ -360,28 +397,19 @@ const DotStrip = memo(function DotStrip({ count, active, goTo }) {
    Main export
 ───────────────────────────────────────────── */
 export function ShortsSection() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 600);
-    check();
-    window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
-  }, []);
+  const isMobile = useSyncExternalStore(
+    subscribeToMobileBreakpoint,
+    getMobileSnapshot,
+    getServerMobileSnapshot,
+  );
 
   const layout = isMobile ? MOBILE : DESKTOP;
   const trackH = Math.round(layout.center * 16 / 9);
 
   const {
-    active, drag, dragging, didDrag,
+    active, isPlaying, handlePlay, drag, dragging, didDrag,
     prev, next, goTo, onDown, onMove, onUp,
   } = useSwiper(shorts.length);
-
-  // Stop video on slide change
-  useEffect(() => { setIsPlaying(false); }, [active]);
-
-  const handlePlay    = useCallback(() => setIsPlaying(p => !p), []);
   const handleActivate = useCallback((idx) => {
     if (didDrag.current) return;
     goTo(idx);
@@ -397,7 +425,7 @@ export function ShortsSection() {
         {/* Header */}
         <div className="mb-10 sm:mb-14 text-center">
           <p className="text-xs font-bold tracking-[0.25em] uppercase mb-3"
-            style={{ color: "rgba(239,68,68,0.6)" }}>
+            style={{ color: "rgba(196,181,253,0.78)" }}>
             Short Form
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold text-white!"
@@ -406,7 +434,7 @@ export function ShortsSection() {
             <span style={{
               fontFamily: "'Instrument Serif', serif",
               fontStyle: "italic", fontWeight: 400,
-              color: "#fca5a5",
+              color: "#c4b5fd",
             }}>
               Shorts
             </span>
@@ -432,7 +460,7 @@ export function ShortsSection() {
                 exit={{ opacity: 0, y: -5 }}
                 transition={{ duration: 0.18 }}
                 style={{
-                  color: "#ef4444", fontWeight: 800,
+                  color: "#c4b5fd", fontWeight: 800,
                   fontSize: 18, fontFamily: "'Syne', sans-serif",
                   minWidth: "1.6ch", display: "inline-block",
                   textAlign: "right",

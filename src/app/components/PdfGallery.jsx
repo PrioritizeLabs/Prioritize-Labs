@@ -221,7 +221,7 @@ function PdfCard({ pdf, onOpen }) {
 
         {/* Gradient overlays */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/5 to-purple-500/5" />
 
         {/* Hover badge */}
         <motion.div
@@ -229,7 +229,7 @@ function PdfCard({ pdf, onOpen }) {
           animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
           className="absolute top-4 right-4 flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-xl px-4 py-2 text-xs font-medium text-white border border-white/10"
         >
-          <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="h-2 w-2 rounded-full bg-violet-400 animate-pulse" />
           Preview
         </motion.div>
 
@@ -238,7 +238,7 @@ function PdfCard({ pdf, onOpen }) {
           animate={{ opacity: isHovered ? 0 : 1 }}
           className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/40 backdrop-blur-sm px-4 py-2 text-xs text-white/80 border border-white/10"
         >
-          <FaRegFilePdf className="text-red-400" />
+          <FaRegFilePdf className="text-violet-300" />
           Hover to scroll
         </motion.div>
       </div>
@@ -247,7 +247,7 @@ function PdfCard({ pdf, onOpen }) {
       <div className="p-6 space-y-4">
         {/* Title & Description */}
         <div>
-          <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-blue-400 transition-colors">
+          <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-violet-300 transition-colors">
             {pdf.title}
           </h3>
           <p className="text-sm text-zinc-400">{pdf.description}</p>
@@ -269,7 +269,7 @@ function PdfCard({ pdf, onOpen }) {
         <div className="flex gap-2">
           <button
             onClick={onOpen}
-            className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-4 py-2.5 text-sm font-medium text-white hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30"
+            className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2.5 text-sm font-medium text-white hover:from-violet-500 hover:to-purple-500 transition-all shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30"
           >
             <Maximize2 className="h-4 w-4" />
             View Full
@@ -314,8 +314,8 @@ function PdfModal({ pdf, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 bg-zinc-900/50 backdrop-blur-xl px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20">
-              <FaRegFilePdf className="text-red-400 text-lg" />
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20">
+              <FaRegFilePdf className="text-violet-300 text-lg" />
             </div>
             <div>
               <p className="text-sm font-semibold text-white">{pdf.title}</p>
@@ -333,7 +333,7 @@ function PdfModal({ pdf, onClose }) {
             </button>
             <button
               onClick={onClose}
-              className="rounded-xl bg-white/5 p-2.5 text-white hover:bg-red-500/20 hover:text-red-400 transition-colors border border-white/10"
+              className="rounded-xl bg-white/5 p-2.5 text-white hover:bg-violet-500/20 hover:text-violet-300 transition-colors border border-white/10"
               title="Close"
             >
               <X className="h-5 w-5" />

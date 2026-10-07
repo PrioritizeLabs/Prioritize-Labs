@@ -355,7 +355,6 @@ import {
 } from 'lucide-react';
 
 import { useCTAModal } from '../hooks/Usectamodal';
-import CTAModal from './CTAModal';
 
 const industries = [
   {
@@ -446,7 +445,7 @@ export default function Industries() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef(null);
-  const { isOpen, source, openModal, closeModal } = useCTAModal();
+  const { openModal } = useCTAModal();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -460,8 +459,9 @@ export default function Industries() {
       ([entry]) => { setIsVisible(entry.isIntersecting); },
       { threshold: 0.1 }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => { if (sectionRef.current) observer.unobserve(sectionRef.current); };
+    const section = sectionRef.current;
+    if (section) observer.observe(section);
+    return () => { if (section) observer.unobserve(section); };
   }, []);
 
   useEffect(() => {
@@ -496,7 +496,6 @@ export default function Industries() {
       className="relative py-16 md:py-24 overflow-hidden"
       style={{ backgroundColor: '#0B0A12' }}
     >
-      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
 
       {/* Background depth */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -675,7 +674,7 @@ export default function Industries() {
         {/* CTA */}
         <div className="mt-10 text-center">
           <p className="mb-4 text-sm" style={{ color: '#6B7280' }}>
-            Don't see your industry? We adapt to any sector.
+            Don&apos;t see your industry? We adapt to any sector.
           </p>
           <button onClick={() => openModal("Industries Section")}
             className="group inline-flex items-center gap-2 text-white text-sm px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-violet-950/50 bg-gradient-to-r from-violet-600 to-purple-600"

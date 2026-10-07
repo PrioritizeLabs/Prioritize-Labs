@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Youtube, X } from "lucide-react";
+import Image from "next/image";
 
 /* ─────────────────────────────────────────────
    Data
@@ -107,7 +108,7 @@ function VideoModal({ video, onClose }) {
       >
         <div
           className="w-full rounded-xl sm:rounded-2xl overflow-hidden border border-white/10"
-          style={{ aspectRatio: "16/9", boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(220,38,38,0.15)" }}
+          style={{ aspectRatio: "16/9", boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(139,92,246,0.18)" }}
         >
           <iframe
             src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`}
@@ -124,7 +125,7 @@ function VideoModal({ video, onClose }) {
             target="_blank"
             rel="noopener noreferrer"
             className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all"
-            style={{ background: "rgba(220,38,38,0.15)", borderColor: "rgba(220,38,38,0.4)", color: "#f87171" }}
+            style={{ background: "rgba(139,92,246,0.15)", borderColor: "rgba(167,139,250,0.4)", color: "#c4b5fd" }}
           >
             <Youtube className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Watch on </span>YouTube
@@ -219,13 +220,13 @@ export function LongFormSection() {
         {/* Header */}
         <div className="mb-8 sm:mb-14 flex items-end justify-between">
           <div>
-            <p className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-red-500/60 mb-2 sm:mb-3">
+            <p className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-violet-300/70 mb-2 sm:mb-3">
               Long Form Content
             </p>
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white! leading-none tracking-tight">
               YouTube{" "}
               <span
-                className="text-red-500"
+                className="text-violet-300"
                 style={{ fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontWeight: 400, fontSize: "1.1em" }}
               >
                 Videos
@@ -273,15 +274,19 @@ export function LongFormSection() {
                         borderRadius: isCenter ? 16 : 10,
                         cursor: isCenter ? "default" : "pointer",
                         boxShadow: isCenter
-                          ? "0 0 0 1.5px rgba(220,38,38,0.55), 0 24px 70px rgba(0,0,0,0.7), 0 0 50px rgba(220,38,38,0.1)"
+                          ? "0 0 0 1.5px rgba(167,139,250,0.55), 0 24px 70px rgba(0,0,0,0.7), 0 0 50px rgba(139,92,246,0.14)"
                           : "0 8px 24px rgba(0,0,0,0.5)",
                       }}
                       onClick={() => { if (!isCenter && !isDragging) goTo(i); }}
                     >
-                      <img
+                      <Image
                         src={thumb(v.id)}
                         alt={v.title}
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="(max-width: 768px) 50vw, 320px"
+                        className="object-cover"
+                        unoptimized
+                        loading={isCenter ? "eager" : "lazy"}
                         draggable={false}
                       />
 
@@ -297,7 +302,7 @@ export function LongFormSection() {
                       {isCenter && (
                         <div
                           className="absolute top-0 left-0 right-0 h-[2px]"
-                          style={{ background: "linear-gradient(90deg, #dc2626, #f97316, transparent)" }}
+                          style={{ background: "linear-gradient(90deg, #8b5cf6, #c084fc, transparent)" }}
                         />
                       )}
 
@@ -306,7 +311,7 @@ export function LongFormSection() {
                           <motion.button
                             className="flex items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur-md"
                             style={{ width: playBtnSize, height: playBtnSize }}
-                            whileHover={{ scale: 1.12, background: "rgba(220,38,38,0.4)", borderColor: "rgba(220,38,38,0.7)" }}
+                            whileHover={{ scale: 1.12, background: "rgba(139,92,246,0.4)", borderColor: "rgba(167,139,250,0.7)" }}
                             whileTap={{ scale: 0.94 }}
                             onClick={(e) => { e.stopPropagation(); if (!isDragging) setModalVideo(v); }}
                           >
@@ -323,9 +328,9 @@ export function LongFormSection() {
                           <div className="min-w-0">
                             <span
                               className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-bold tracking-widest uppercase mb-1"
-                              style={{ background: "rgba(220,38,38,0.2)", color: "#f87171", border: "1px solid rgba(220,38,38,0.3)" }}
+                              style={{ background: "rgba(139,92,246,0.2)", color: "#c4b5fd", border: "1px solid rgba(167,139,250,0.3)" }}
                             >
-                              <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse inline-block" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-violet-300 animate-pulse inline-block" />
                               Now Spotlit
                             </span>
                             <p className="text-white font-bold text-sm sm:text-lg leading-snug truncate">
@@ -337,7 +342,7 @@ export function LongFormSection() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hidden sm:flex flex-shrink-0 items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-semibold border transition-all"
-                            style={{ background: "rgba(220,38,38,0.15)", borderColor: "rgba(220,38,38,0.4)", color: "#f87171" }}
+                            style={{ background: "rgba(139,92,246,0.15)", borderColor: "rgba(167,139,250,0.4)", color: "#c4b5fd" }}
                             onClick={(e) => e.stopPropagation()}
                           >
                             <Youtube className="w-3.5 h-3.5" />
@@ -377,7 +382,7 @@ export function LongFormSection() {
                   animate={{
                     width:      i === activeIdx ? 20 : 5,
                     opacity:    i === activeIdx ? 1  : 0.28,
-                    background: i === activeIdx ? "#dc2626" : "#ffffff",
+                    background: i === activeIdx ? "#8b5cf6" : "#ffffff",
                   }}
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   className="h-[5px] rounded-full"

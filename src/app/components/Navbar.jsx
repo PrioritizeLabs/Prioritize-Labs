@@ -1,25 +1,24 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Menu,
   X,
   ChevronDown,
-  Code2,
-  Video,
   ArrowRight,
   Paintbrush2,
+  Cpu,
+  TrendingUp,
 } from "lucide-react";
 import { useCTAModal } from "../hooks/Usectamodal";
-import CTAModal from "./CTAModal";
-
-import { useRef } from "react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const { isOpen, source, openModal, closeModal } = useCTAModal();
+  const { openModal } = useCTAModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +33,6 @@ export default function Navbar() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
-      setMobileServicesOpen(false);
     }
     return () => {
       document.body.style.overflow = "unset";
@@ -56,16 +54,16 @@ export default function Navbar() {
   }, []);
 
   const services = [
-    { icon: Code2, name: "Web Development", href: "/services/web-dev" },
+    { icon: TrendingUp, name: "Growth Marketing", href: "/services/growth-marketing" },
     {
       icon: Paintbrush2,
-      name: "Creative Services",
+      name: "Creative Production",
       href: "/services/creative-services",
     },
     {
-      icon: Video,
-      name: "Video Production",
-      href: "/services/video-production",
+      icon: Cpu,
+      name: "Technology & Automation",
+      href: "/services/technology",
     },
   ];
 
@@ -80,8 +78,6 @@ export default function Navbar() {
 
   return (
     <>
-      <CTAModal isOpen={isOpen} onClose={closeModal} source={source} />
-
       {/* Nav bar */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -93,14 +89,16 @@ export default function Navbar() {
         <div className="mx-auto px-8 md:px-12 lg:px-16">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2 group">
-              <img
+            <Link href="/" className="flex items-center gap-2 group">
+              <Image
                 src="/prioritizelabs_logo.png"
                 alt="PrioritizeLabs Logo"
                 className="h-12 w-fit object-contain"
+                width={200}
+                height={52}
                 fetchPriority="high"
               />
-            </a>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-8">
@@ -181,7 +179,10 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              onClick={() => {
+                if (isMobileMenuOpen) setMobileServicesOpen(false);
+                setIsMobileMenuOpen((prev) => !prev);
+              }}
               className="lg:hidden p-2 text-zinc-400 hover:text-violet-400 transition-colors relative z-50"
               aria-label="Toggle menu"
             >
@@ -221,13 +222,16 @@ export default function Navbar() {
                     />
                   </button>
                 ) : (
-                  <a
+                  <Link
                     href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setMobileServicesOpen(false);
+                    }}
                     className="flex items-center justify-between px-4 py-3 text-zinc-300 hover:text-violet-400 hover:bg-zinc-800/60 rounded-xl transition-all font-medium"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 )}
 
                 {/* Mobile Services Submenu — toggled */}
@@ -243,10 +247,13 @@ export default function Navbar() {
                       {services.map((service) => {
                         const Icon = service.icon;
                         return (
-                          <a
+                          <Link
                             key={service.name}
                             href={service.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setMobileServicesOpen(false);
+                            }}
                             className="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-violet-400 hover:bg-zinc-800/60 rounded-xl transition-all"
                           >
                             <div className="flex items-center justify-center w-8 h-8 bg-zinc-800 rounded-lg">
@@ -255,7 +262,7 @@ export default function Navbar() {
                             <span className="text-sm font-medium">
                               {service.name}
                             </span>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
@@ -273,6 +280,7 @@ export default function Navbar() {
             onClick={() => {
               openModal("Mobile Menu");
               setIsMobileMenuOpen(false);
+              setMobileServicesOpen(false);
             }}
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-violet-600 to-purple-600 text-white px-6 py-4 rounded-xl font-semibold shadow-md shadow-violet-900/50"
           >

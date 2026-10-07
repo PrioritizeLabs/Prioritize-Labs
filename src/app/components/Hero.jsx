@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Sparkles,
@@ -11,19 +10,14 @@ import {
 } from "lucide-react";
 
 import { useCTAModal } from "../hooks/Usectamodal";
-import CTAModal from "./CTAModal";
+import { useHydrated } from "../hooks/useHydrated";
 
 import CircuitBackground from "./CircuitBackground";
 import AICore from "./AICore";
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
-
-  const { isOpen, source, openModal, closeModal } = useCTAModal();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
+  const { openModal } = useCTAModal();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -53,12 +47,6 @@ export default function HeroSection() {
       onMouseMove={handleMove}
       className="relative overflow-hidden bg-[#03030A] text-white"
     >
-      <CTAModal
-        isOpen={isOpen}
-        onClose={closeModal}
-        source={source}
-      />
-
       {/* Background */}
       <CircuitBackground />
 

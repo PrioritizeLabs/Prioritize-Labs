@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-accent: #8b5cf6;
+  --color-accentSoft: #a78bfa;
+  --color-borderStrong: rgba(167, 139, 250, 0.32);
+  --color-textPrimary: #e5e5e5;
+  --color-textSecondary: #a1a1aa;
+  --color-textMuted: #71717a;
+  --color-ink: #ffffff;
+  --font-display: var(--font-neue-kaine);
+  --font-body: var(--font-geist-sans);
+  --shadow-glowMd: 0 0 32px rgba(139, 92, 246, 0.2);
+  --shadow-glowSm: 0 0 18px rgba(139, 92, 246, 0.16);
+}
+
 /* ─────────────────────────────────────────
    CSS Custom Properties
 ───────────────────────────────────────── */
@@ -386,5 +400,95 @@ select {
   .swiper-button-prev,
   .swiper-pagination {
     display: none !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: #ffffff;
+}
+
+/* Visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fine technical grid texture, felt more than seen */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.bg-grid-full {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.radial-glow-top {
+  background: radial-gradient(circle at 50% 10%, rgba(139, 92, 246, 0.16), transparent 45%);
+}
+
+.radial-glow-center {
+  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.12), transparent 55%);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.section-shell {
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (min-width: 768px) {
+  .section-shell {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }

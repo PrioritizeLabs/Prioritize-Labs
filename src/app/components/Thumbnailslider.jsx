@@ -83,10 +83,13 @@ function Modal({ thumbnail, onClose, onPrev, onNext }) {
           className="relative w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
           style={{ aspectRatio: "16/9" }}
         >
-          <img
+          <Image
             src={thumbnail.src}
             alt={`Thumbnail #${thumbnail.id}`}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, 896px"
+            className="object-cover"
+            unoptimized
           />
         </div>
 
@@ -126,7 +129,7 @@ function ThumbCard({ thumbnail, onClick }) {
   return (
     <motion.button
       onClick={onClick}
-      className="relative flex-shrink-0 rounded-xl overflow-hidden group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400/60"
+      className="relative flex-shrink-0 rounded-xl overflow-hidden group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60"
       style={{
         width: "clamp(260px, 32vw, 420px)",
         aspectRatio: "16/9",
@@ -149,7 +152,7 @@ function ThumbCard({ thumbnail, onClick }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       {/* Border glow */}
-      <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-red-500/50 transition-all duration-300 ring-0 group-hover:ring-1 group-hover:ring-red-500/20" />
+      <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-violet-400/50 transition-all duration-300 ring-0 group-hover:ring-1 group-hover:ring-violet-500/20" />
 
       {/* Expand icon */}
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -220,7 +223,7 @@ export function ThumbnailSliderCSS() {
         <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-8 sm:mb-10">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs sm:text-sm font-medium tracking-[0.18em] uppercase text-red-400/70 mb-2">
+              <p className="text-xs sm:text-sm font-medium tracking-[0.18em] uppercase text-violet-300/80 mb-2">
                 Creative Portfolio
               </p>
               <h2
@@ -229,7 +232,7 @@ export function ThumbnailSliderCSS() {
               >
                 YouTube{" "}
                 <span
-                  className="text-red-300"
+                  className="text-violet-300"
                   style={{
                     fontFamily: "'Playfair Display', serif",
                     fontStyle: "italic",
@@ -248,8 +251,8 @@ export function ThumbnailSliderCSS() {
               onClick={() => setIsPaused((p) => !p)}
               className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all duration-200 text-white"
               style={{
-                background: isPaused ? "rgba(239,68,68,0.12)" : "rgba(255,255,255,0.05)",
-                borderColor: isPaused ? "rgba(239,68,68,0.45)" : "rgba(255,255,255,0.1)",
+                background: isPaused ? "rgba(139,92,246,0.16)" : "rgba(255,255,255,0.05)",
+                borderColor: isPaused ? "rgba(167,139,250,0.45)" : "rgba(255,255,255,0.1)",
               }}
               aria-label={isPaused ? "Resume" : "Pause"}
             >
