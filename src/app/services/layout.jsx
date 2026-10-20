@@ -33,6 +33,7 @@ export default function ServicesLayout({ children }) {
               ["Growth Marketing", "/services/growth-marketing"],
               ["Creative Production", "/services/creative-services"],
               ["Technology & Automation", "/services/technology"],
+              ["Software Development", "/services/software-development"],
             ].map(([name, path], index) => ({
               "@type": "ListItem",
               position: index + 1,

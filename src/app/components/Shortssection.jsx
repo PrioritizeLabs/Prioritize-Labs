@@ -308,9 +308,11 @@ const SlideCard = memo(function SlideCard({
           <>
             <iframe
               key={short.id}
-              src={`https://www.youtube.com/embed/${short.id}?autoplay=1&rel=0&modestbranding=1`}
+              src={`https://www.youtube-nocookie.com/embed/${short.id}?autoplay=1&rel=0&modestbranding=1`}
               allow="autoplay; fullscreen"
               allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
               style={{
                 position: "absolute", inset: 0,
                 width: "100%", height: "100%", border: "none",

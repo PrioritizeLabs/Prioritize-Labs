@@ -351,6 +351,7 @@ import {
   Heart,
   Paintbrush2,
   Cpu,
+  Code2,
   TrendingUp,
 } from 'lucide-react';
 
@@ -362,6 +363,7 @@ export default function Footer() {
     { icon: TrendingUp, name: 'Growth Marketing', href: '/services/growth-marketing' },
     { icon: Paintbrush2, name: 'Creative Production', href: '/services/creative-services' },
     { icon: Cpu, name: 'Technology & Automation', href: '/services/technology' },
+    { icon: Code2, name: 'Software Development', href: '/services/software-development' },
   ];
 
   const company = [

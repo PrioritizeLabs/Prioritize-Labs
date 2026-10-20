@@ -1,14 +1,6 @@
-import Hero from "./components/Hero";
-import WhyChoose from "./components/WhyChoose";
-import Services from "./components/Services";
-import Process from "./components/Process";
-import Results from "./components/Results";
-import Industries from "./components/Industries";
-import Testimonials from "./components/Testimonials";
-import HomeCTA from "./components/HomeCTA";
-import JsonLd from "./components/JsonLd";
 import { createPageMetadata, SITE_URL } from "./seo";
-import SmoothScroll from "./services/growth-marketing/components/SmoothScroll";
+import JsonLd from "./components/JsonLd";
+import HomeExperience from "./components/HomeExperience";
 
 export const metadata = createPageMetadata({
   title: "Growth Marketing, Creative & Technology Agency | Prioritize Labs",
@@ -54,16 +46,7 @@ export default function HomePage() {
           },
         }}
       />
-      <SmoothScroll>
-        <Hero />
-        <Services />
-        <WhyChoose />
-        <Process />
-        <Results />
-        <Industries />
-        <Testimonials />
-        <HomeCTA />
-      </SmoothScroll>
+      <HomeExperience />
     </>
   );
 }

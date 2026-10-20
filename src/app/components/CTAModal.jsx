@@ -441,6 +441,7 @@ const SERVICES = [
   "Growth Marketing",
   "Creative Production",
   "Technology & Automation",
+  "Software Development",
 ];
 
 // ─── ANIMATION VARIANTS ───────────────────────────────────────────────────────
@@ -485,7 +486,7 @@ const successVariants = {
 };
 
 // ─── FIELD COMPONENT ─────────────────────────────────────────────────────────
-function Field({ icon: Icon, label, error, index, children }) {
+function Field({ icon: Icon, label, error, index, inputId, required, children }) {
   return (
     <motion.div
       custom={index}
@@ -494,8 +495,13 @@ function Field({ icon: Icon, label, error, index, children }) {
       animate="visible"
       className="flex flex-col gap-1.5"
     >
-      <label className="text-xs font-semibold tracking-widest uppercase text-gray-400">
+      <label htmlFor={inputId} className="text-xs font-semibold tracking-widest uppercase text-gray-400">
         {label}
+        {required && (
+          <span aria-hidden="true" className="ml-1 text-violet-300">
+            *
+          </span>
+        )}
       </label>
       <div
         className={`relative flex items-center rounded-xl border bg-white/[0.03] transition-all duration-200 focus-within:border-violet-500 focus-within:bg-white/[0.05] ${
@@ -519,6 +525,8 @@ function Field({ icon: Icon, label, error, index, children }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             className="text-xs text-red-400 font-medium pl-1"
+            id={`${inputId}-error`}
+            role="alert"
           >
             {error}
           </motion.p>
@@ -584,6 +592,8 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
   };
 
   const handleSubmit = async () => {
+    if (status === "loading") return;
+
     const errs = validate();
     if (Object.keys(errs).length) {
       setErrors(errs);
@@ -666,7 +676,7 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                     Let&apos;s Build Something Great
                   </h2>
                   <p className="mt-1 text-sm text-gray-400">
-                    Fill in your details and we&apos;ll get back to you within 24 hours.
+                    Share a few details and the team can follow up about your project.
                   </p>
                 </motion.div>
 
@@ -679,6 +689,8 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                       initial="hidden"
                       animate="visible"
                       className="py-8 flex flex-col items-center gap-4 text-center"
+                      role="status"
+                      aria-live="polite"
                     >
                       <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center">
                         <CheckCircle2 size={32} className="text-green-400" />
@@ -688,7 +700,9 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                           We&apos;ve got your details!
                         </p>
                         <p className="mt-1 text-sm text-gray-400">
-                          Our team will reach out to you shortly.
+                          Your request was sent to our form service, which does
+                          not provide an on-page delivery receipt. To confirm
+                          directly, email info@prioritizelabs.com.
                         </p>
                       </div>
                       <button
@@ -699,19 +713,34 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                       </button>
                     </motion.div>
                   ) : (
-                    <motion.div key="form" className="flex flex-col gap-4">
+                    <motion.form
+                      key="form"
+                      className="flex flex-col gap-4"
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        handleSubmit();
+                      }}
+                    >
                       {/* Name */}
                       <Field
                         icon={User}
                         label="Full Name"
                         error={errors.name}
                         index={0}
+                        inputId="inquiry-name"
+                        required
                       >
                         <input
+                          id="inquiry-name"
+                          name="name"
                           type="text"
                           placeholder="Anubhav Singh"
                           value={form.name}
                           onChange={handleChange("name")}
+                          required
+                          autoComplete="name"
+                          aria-invalid={Boolean(errors.name)}
+                          aria-describedby={errors.name ? "inquiry-name-error" : undefined}
                           className={inputClass}
                         />
                       </Field>
@@ -722,12 +751,20 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                         label="Contact Number"
                         error={errors.contact}
                         index={1}
+                        inputId="inquiry-contact"
+                        required
                       >
                         <input
+                          id="inquiry-contact"
+                          name="contact"
                           type="tel"
                           placeholder="+91 98765 43210"
                           value={form.contact}
                           onChange={handleChange("contact")}
+                          required
+                          autoComplete="tel"
+                          aria-invalid={Boolean(errors.contact)}
+                          aria-describedby={errors.contact ? "inquiry-contact-error" : undefined}
                           className={inputClass}
                         />
                       </Field>
@@ -738,12 +775,18 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                         label="Email Address"
                         error={errors.email}
                         index={2}
+                        inputId="inquiry-email"
                       >
                         <input
+                          id="inquiry-email"
+                          name="email"
                           type="email"
                           placeholder="john@example.com"
                           value={form.email}
                           onChange={handleChange("email")}
+                          autoComplete="email"
+                          aria-invalid={Boolean(errors.email)}
+                          aria-describedby={errors.email ? "inquiry-email-error" : undefined}
                           className={inputClass}
                         />
                       </Field>
@@ -754,10 +797,17 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                         label="Service Interested In"
                         error={errors.service}
                         index={3}
+                        inputId="inquiry-service"
+                        required
                       >
                         <select
+                          id="inquiry-service"
+                          name="service"
                           value={form.service}
                           onChange={handleChange("service")}
+                          required
+                          aria-invalid={Boolean(errors.service)}
+                          aria-describedby={errors.service ? "inquiry-service-error" : undefined}
                           className={`${inputClass} appearance-none cursor-pointer text-gray-300`}
                         >
                           <option value="" disabled className="bg-[#13111C] text-gray-500">
@@ -783,8 +833,11 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             className="text-xs text-red-400 text-center"
+                            role="alert"
+                            aria-live="assertive"
                           >
-                            Something went wrong. Please try again.
+                            Could not submit your request. Please try again or
+                            email info@prioritizelabs.com.
                           </motion.p>
                         )}
                       </AnimatePresence>
@@ -795,7 +848,7 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                         variants={fieldVariants}
                         initial="hidden"
                         animate="visible"
-                        onClick={handleSubmit}
+                        type="submit"
                         disabled={status === "loading"}
                         whileHover={{ scale: 1.015 }}
                         whileTap={{ scale: 0.985 }}
@@ -815,9 +868,9 @@ export default function CTAModal({ isOpen, onClose, source = "Website CTA" }) {
                       </motion.button>
 
                       <p className="text-center text-xs text-gray-500 mt-1">
-                        No spam, ever. We respect your privacy.
+                        Your details are used to follow up on this enquiry.
                       </p>
-                    </motion.div>
+                    </motion.form>
                   )}
                 </AnimatePresence>
               </div>

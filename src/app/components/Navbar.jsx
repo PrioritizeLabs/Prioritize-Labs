@@ -9,6 +9,7 @@ import {
   ArrowRight,
   Paintbrush2,
   Cpu,
+  Code2,
   TrendingUp,
 } from "lucide-react";
 import { useCTAModal } from "../hooks/Usectamodal";
@@ -64,6 +65,11 @@ export default function Navbar() {
       icon: Cpu,
       name: "Technology & Automation",
       href: "/services/technology",
+    },
+    {
+      icon: Code2,
+      name: "Software Development",
+      href: "/services/software-development",
     },
   ];
 
@@ -240,7 +246,7 @@ export default function Navbar() {
                   <div
                     className={`overflow-hidden transition-all duration-300 ${
                       mobileServicesOpen
-                        ? "max-h-64 opacity-100 mt-1"
+                        ? "max-h-96 opacity-100 mt-1"
                         : "max-h-0 opacity-0"
                     }`}
                   >

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
+  Code2,
   Palette,
   TrendingUp,
   Wrench,
@@ -40,6 +41,17 @@ const services = [
     Icon: Wrench,
     accent: "from-indigo-500/20 to-violet-500/[0.03]",
     icon: "text-indigo-300",
+  },
+  {
+    number: "04",
+    title: "Software Development",
+    category: "Turn ideas into useful products",
+    description:
+      "Product discovery, experience design, software engineering, launch and continued improvement—guided by real business needs.",
+    href: "/services/software-development",
+    Icon: Code2,
+    accent: "from-purple-500/20 to-blue-500/[0.03]",
+    icon: "text-purple-300",
   },
 ];
 

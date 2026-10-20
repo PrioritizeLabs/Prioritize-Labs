@@ -111,9 +111,11 @@ function VideoModal({ video, onClose }) {
           style={{ aspectRatio: "16/9", boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(139,92,246,0.18)" }}
         >
           <iframe
-            src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`}
+            src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`}
             allow="autoplay; fullscreen"
             allowFullScreen
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
             className="w-full h-full border-0"
             title={video.title}
           />
