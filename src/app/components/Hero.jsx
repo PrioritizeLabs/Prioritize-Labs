@@ -44,7 +44,6 @@ export default function HeroSection() {
 
   return (
     <section
-      onMouseMove={handleMove}
       className="relative overflow-hidden bg-[#03030A] text-white"
     >
       {/* Background */}
@@ -213,6 +212,8 @@ export default function HeroSection() {
         {/* RIGHT */}
 
         <motion.div
+      onMouseMove={handleMove}
+
           style={{
             rotateX,
             rotateY,
